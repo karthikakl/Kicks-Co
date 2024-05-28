@@ -367,7 +367,7 @@ const sortingPage = async (req, res) => {
         }
 
        const products = await Product.find(productQuery).sort(sortCriteria);
-       console.log('products==',products);
+       console.log('products===',products);
         return res.render('filterPage', { user: userId, 
             products,
             category: categoryName, 
