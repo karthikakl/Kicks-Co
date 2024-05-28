@@ -16,7 +16,7 @@ const nocache  = require('nocache')
 const mongoose = require('mongoose')
 mongoose.connect ("mongodb://127.0.0.1:27017/ecommerce_management_system");
  
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'public')));  ///route
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
