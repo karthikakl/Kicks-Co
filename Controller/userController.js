@@ -45,7 +45,14 @@ const homePage = async (req, res) => {
         }
 
        const product = await Product.find(productQuery).sort(sortCriteria);
-        return res.status(200).render("home", { user: req.session.user_id, category, product, query: req.query.query ,sort})
+
+       const newArrivals = await Product.find({category:'New Arrivals',isPublished:true}).sort(sortCriteria)
+        return res.status(200).render("home", 
+        { user: req.session.user_id, 
+            category, 
+            product, 
+            newArrivals,
+            query: req.query.query ,sort})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error" })
@@ -339,20 +346,32 @@ const sortingPage = async (req, res) => {
         const userId = req.session.user_id;
         const categoryName = req.query.category;
         
-        const products = await Product.find({ category: categoryName });
+        console.log("categoryName",categoryName)
         
+        let productQuery = { isPublished: true };
+        console.log('productQuery',productQuery);
+
+        if(categoryName){
+            productQuery.category = categoryName;
+        }
+
         const sort = req.query.sort;
-        let sortedProducts = [...products]; // Create a shallow copy of the products array
 
-        let sortCriteria;
+        let sortCriteria ={};
         if (sort === 'offerPrice-low-to-high') {
-            sortedProducts.sort((a, b) => a.offerPrice - b.offerPrice);
+           sortCriteria = {offerPrice :1};
         } else if (sort === 'offerPrice-high-to-low') {
-            sortedProducts.sort((a, b) => b.offerPrice - a.offerPrice);
-        } 
+            sortCriteria = {offerPrice : -1};
+        } else {
+            sortCriteria ={};
+        }
 
-        console.log('sortedProducts', sortedProducts);
-        return res.render('filterPage', { user: userId, products: sortedProducts, category: categoryName, sort });
+       const products = await Product.find(productQuery).sort(sortCriteria);
+       console.log('products==',products);
+        return res.render('filterPage', { user: userId, 
+            products,
+            category: categoryName, 
+            sort });
     } catch (error) {
         console.error("Error fetching products:", error);
         res.status(500).send('Internal server error');

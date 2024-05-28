@@ -34,6 +34,7 @@ const placeOrder = async (req, res) => {
     try {
        
         const { address, coupon} = req.body;
+        console.log('address---',req.body);
         const user = req.session.user_id;
 
         const userData = await User.findById(user);

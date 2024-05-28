@@ -946,32 +946,17 @@
                             <!--End nav-tabs-->
 
 
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-9">
-                                        <ul class="nav" id="categoryNav">
-                                            <li class="nav-item">
-                                                <button class="nav-link" data-category="new-arrival">New Arrivals</button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button class="nav-link" data-category="new-sellers">Best Sellers</button>
-                                            </li>
-                                            
-
-                                        </ul>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
+                            
+                            
 
                             <div class="tab-content wow fadeIn animated" id="myTabContent">
                                 <div class="tab-pane fade show active" id="tab-one" role="tabpanel"
                                     aria-labelledby="tab-one">
-                                    <div class="row product-grid-4">
-                                        <% if (product && product.length> 0) { %>
-                                            <% product.forEach(element=> { %>
+                                    <span>New Arrival Products</span>
+                                    <div class="product-container">
+                                        <div class="product-wrapper" id="newArrivalWrapper">
+                                        <% if (newArrivals &&newArrivals.length> 0) { %>
+                                            <% newArrivals.forEach(element=> { %>
                                                 <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                                     <div class="product-cart-wrap mb-30">
                                                         <div class="product-img-action-wrap">
@@ -984,25 +969,8 @@
                                                                         src="/product-images/<%= element.image[1].filename %>"
                                                                         alt="">
                                                                 </a>
-                                                            </div>
-                                                            <!-- <div class="product-action-1">
-                                                                <a aria-label="Quick view" class="action-btn hover-up"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#quickViewModal"><i
-                                                                        class="fi-rs-eye"></i></a>
-                                                                <a aria-label="Add To Wishlist"
-                                                                    class="action-btn hover-up"
-                                                                    href="shop-wishlist.html"><i
-                                                                        class="fi-rs-heart"></i></a>
-                                                                <a aria-label="Compare" class="action-btn hover-up"
-                                                                    href="shop-compare.html"><i
-                                                                        class="fi-rs-shuffle"></i></a>
-                                                            </div> -->
-                                                            <!-- <div
-                                                                class="product-badges product-badges-position product-badges-mrg">
-                                                                <span class="hot">Hot</span>
-                                                            </div> -->
-                                                        </div>
+                                                            </div> 
+                                                         </div>
                                                         <div class="product-content-wrap">
                                                             <div class="product-category">
                                                                 <a href="shop-grid-right.html">
@@ -1012,11 +980,11 @@
                                                             <h2><a href="shop-product-right.html">
                                                                     <%= element.name %>
                                                                 </a></h2>
-                                                            <!-- <div class="rating-result" title="90%">
+                                                             <div class="rating-result" title="90%">
                                                                 <span>
                                                                     <span>90%</span>
                                                                 </span>
-                                                            </div> -->
+                                                            </div> 
                                                             <div class="product-price">
                                                                 <span>₹<%= element.
                                                                     offerPrice %> </span>
@@ -1039,9 +1007,14 @@
 
 
                                     </div>
-                                    <!--End product-grid-4-->
                                 </div>
-
+                                <div class="pagination-buttons">
+                                    <span id="prevButton" class="arrow">&laquo;</span>
+                                    <span id="nextButton" class="arrow">&raquo;</span>
+                                </div>
+                                </div>
+                                </div> 
+                            </main>
 
                                 <section class="featured section-padding">
                                     <div class="container pb-25">
@@ -1085,7 +1058,7 @@
                                         </div>
                                     </div>
                                 </section>
-        </main>
+        
        
 
         <script>
@@ -1124,7 +1097,7 @@
             product.style.display = "";
             productFound = true; 
         } else {
-            product.style.display = "none"; // Hide the product if it doesn't match the search
+            product.style.display = "none";
         }
     });
 
@@ -1155,5 +1128,73 @@ selectElement.addEventListener('change', function (event) {
 
 
                     </script>
+
+<script>
+    // JavaScript for pagination
+    const productsPerPage = 3;
+    let currentIndex = 0;
+
+    const productWrapper = document.getElementById('newArrivalWrapper');
+    const products = productWrapper.children;
+    const totalProducts = products.length;
+
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    function updatePagination() {
+        const totalPages = Math.ceil(totalProducts / productsPerPage);
+        const currentPage = Math.floor(currentIndex / productsPerPage);
+
+        productWrapper.style.transform = `translateX(-${currentIndex * (100 / productsPerPage)}%)`;
+
+        prevButton.disabled = currentIndex === 0;
+        nextButton.disabled = currentIndex + productsPerPage >= totalProducts;
+    }
+
+    prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex -= productsPerPage;
+            updatePagination();
+        }
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (currentIndex + productsPerPage < totalProducts) {
+            currentIndex += productsPerPage;
+            updatePagination();
+        }
+    });
+
+    updatePagination();
+</script>
+
+<style>
+    .product-container {
+        display: flex;
+        overflow: hidden;
+    }
+    .product-wrapper {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    .product-cart-wrap {
+        flex: 0 0 33.3333%; 
+    }
+   .pagination-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .arrow {
+            cursor: pointer;
+            font-size: 24px;
+            user-select: none;
+        }
+        .arrow.disabled {
+            color: grey;
+            cursor: not-allowed;
+        }
+</style>             
 
         <%- include('./userLayout/footer') %>
