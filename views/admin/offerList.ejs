@@ -1,0 +1,213 @@
+<%- include('./adminLayouts/header') %>
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Offer Codes</h2>
+            
+        </div>
+        <div>
+           
+                
+            <a href="/admin/addOfferPage" class="btn btn-primary"><i class="material-icons md-plus"></i>Add new
+                offer</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="tableInput">
+                            <thead>
+                                <tr>
+                                    <th>Offer Type</th>
+                                    <th>Name</th>
+                                    <th>Discount Percentage</th>
+                                    <th>Maximum Discount Amount</th>
+                                    <th>Expiry Date</th>
+                                    <th>List/Unlist</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (offers && offers.length > 0) { %>
+                                    <% offers.sort((a,b)=> new Date(b.Date)- new Date(a.Date)) %>
+                                    <% offers.forEach(offer => { %>
+                                        <tr>
+                                            <td>
+                                                <% if (offer.product) { %>
+                                                    Product
+                                                <% } else if (offer.category) { %>
+                                                    Category
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if (offer.product) { %>
+                                                    <%= offer.product.name %>
+                                                <% } else if (offer.category.name) { %>
+                                                    <%= offer.category.name %>
+                                                <% } %>
+                                            </td>
+                                            <td><%= offer.discountPercent %></td>
+                                            <td><%= offer.maxDiscountAmount %></td>
+                                            <td> <%= new Date(offer.
+                                                ExpiryDate).toLocaleDateString() %></td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <% if (offer.is_List === true) { %>
+                                                        <button type="button" class="btn btn-primary mt-15" onclick="updateOffer('unlist', '<%= offer._id %>')">UnList</button>
+                                                    <% } else { %>
+                                                        <button type="button" class="btn btn-primary mt-15" onclick="updateOffer('list', '<%= offer._id %>')">List</button>
+                                                    <% } %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="6" style="font-size: 18px; color: red; text-align: center;">
+                                            No offers available!!
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start" id="paginationList"></ul>
+        </nav>
+    </div>
+</section>
+
+
+<script>
+    function updateOffer(action, offerId) {
+        const actionVerb = action === 'list' ? 'list' : 'unlist';
+        Swal.fire({
+            title: `Are you sure?`,
+            text: `You want to ${action} this offer!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, ${action} it!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/admin/${action}/${offerId}`, { method: 'PUT' })
+                    .then(res => {
+                        if (res.ok) {
+                            Swal.fire({
+                                title: `${action}ed`,
+                                text: `Offer is ${action}ed.`,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: `Cancelled the ${action}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const content = document.querySelector('.table');
+        const itemsPerPage = 6;
+        let currentPage = 0;
+        const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+    
+    
+        function showPage(page) {
+            const startIndex = page * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            items.forEach((item, index) => {
+                item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+            });
+    
+            updateActiveButtonStates();
+        }
+        function createPageButtons() {
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            const paginationContainer = document.createElement('div');
+            // const paginationDiv = document.body.appendChild(paginationContainer);
+            paginationContainer.classList.add('pagination');
+    
+            for (let i = 0; i < totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i + 1;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updateActiveButtonStates();
+                });
+    
+    
+                paginationContainer.appendChild(pageButton);
+            }
+    
+            document.querySelector('.pagination-area').appendChild(paginationContainer);
+    
+        }
+        function updateActiveButtonStates() {
+            const pageButtons = document.querySelectorAll('.pagination button');
+            pageButtons.forEach((button, index) => {
+                if (index === currentPage) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+    
+        createPageButtons();
+        showPage(currentPage);
+    
+    })
+    
+    </script>
+
+<style>
+    .pagination-area {
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 2px 5px;
+        background-color:#484f4f;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .pagination button.active {
+        background-color: #0000003a;
+    }
+</style>
+<%- include('./adminLayouts/footer') %>

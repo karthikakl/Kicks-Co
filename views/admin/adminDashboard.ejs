@@ -1,0 +1,493 @@
+<%- include('./adminLayouts/header') %>
+      <section class="content-main">
+        <div class="content-header">
+          <div>
+            <h2 class="content-title card-title">Dashboard</h2>
+            <p>Whole data about your business here</p>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-primary-light"
+                  ><i class="text-primary material-icons md-monetization_on"></i
+                ></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Revenue</h6>
+                  <span>₹<%= totalRevenue %></span>
+                  <span class="text-sm"> Shipping fees are not included </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-success-light"
+                  ><i class="text-success material-icons md-local_shipping"></i
+                ></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Orders</h6>
+                  <span><%= order %></span>
+                  <span class="text-sm"> Including orders in transit </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-warning-light"
+                  ><i class="text-warning material-icons md-qr_code"></i
+                ></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Products</h6>
+                  <span><%= products %></span>
+                  <span class="text-sm"> In <%= category %> Categories </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-info-light"
+                  ><i class="text-info material-icons md-shopping_basket"></i
+                ></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Monthly Earning</h6>
+                  <span>₹<%=monthlyEarnings %></span>
+                  <span class="text-sm"> Based in your local time. </span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-lg-12">
+            <div class="card mb-4">
+              <article class="card-body">
+                <h5 class="card-title">Sale statistics</h5>
+                <button onclick="updateChart('daily')">Daily</button>
+                <button onclick="updateChart('monthly')">Monthly</button>
+                <button onclick="updateChart('yearly')">Yearly</button>
+                <canvas id="myChart" height="120px"></canvas>
+              </article>
+            </div>
+            
+          </div>
+          <div class="col-xl-4 col-lg-12">
+            <div class="card mb-4">
+              <article class="card-body">
+                <h5 class="card-title">Revenue Base on Area</h5>
+                <canvas id="paymentChart" height="217"></canvas>
+              </article>
+            </div>
+            
+          </div>
+        </div>
+        <div class="card mb-4">
+          <header class="card-header">
+            <h4 class="card-title">Sales Report</h4>
+            <div class="row align-items-center">
+              <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                <button class="btn btn-primary" id="createReportButton">
+                  Create report
+                </button>
+              </div>
+              <div class="col-md-2 col-6">
+                <label for="startDate" class="me-2">Start Date:</label>
+                <input type="date" id="startDate" class="form-control me-2" />
+              </div>
+              <div class="col-md-2 col-6">
+                <div class="custom_select">
+                  <label for="endDate" class="me-2">End Date:</label>
+                  <input type="date" id="endDate" class="form-control me-2" />
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="card-body">
+            <div class="table-responsive">
+              <div class="table-responsive">
+                <table
+                  class="table align-middle table-nowrap mb-0" id="tableInput"
+                  
+                >
+                  <thead class="table-light" id="reportContainer">
+                    <tr>
+                      <th class="align-middle" scope="col">Order ID</th>
+                      <th class="align-middle" scope="col">Billing Name</th>
+                      <th class="align-middle" scope="col">Date</th>
+                      <th class="align-middle" scope="col">Total</th>
+                      <th class="align-middle" scope="col">Payment Status</th>
+                      <th class="align-middle" scope="col">Payment Method</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportTableBody">
+                    <% orders.forEach(element => { %>
+                    <tr>
+                      <td><%= element._id %></td>
+                      <td><%= element.user.name %></td>
+                      <td>
+                        <%= new Date(element.date).toLocaleDateString('en-US')
+                        %>
+                      </td>
+                      <td><%= element.total %></td>
+                      <td>
+                        <span class="badge badge-pill badge-soft-success"
+                          ><%= element.paymentStatus %></span
+                        >
+                      </td>
+                      <td>
+                        <span class="badge badge-pill badge-soft-success"
+                          ><%= element.paymentMethod %></span
+                        >
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- table-responsive end// -->
+          </div>
+        </div>
+        <div class="pagination-area mt-15 mb-50">
+          <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-start" id="paginationList"></ul>
+          </nav>
+      </div>
+      </section>
+      <!-- content-main end// -->
+      <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+          <div class="col-sm-6">
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            ©, Evara - HTML Ecommerce Template .
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-end">
+            <button id="downloadButton" class="btn btn-primary" style="display: none;" onclick="downloadPdf()">
+              Download PDF
+          </button>
+        </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const content = document.querySelector('.table');
+          const itemsPerPage = 10;
+          let currentPage = 0;
+  
+          function showPage(page) {
+              const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+              const startIndex = page * itemsPerPage;
+              const endIndex = startIndex + itemsPerPage;
+              items.forEach((item, index) => {
+                  item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+              });
+  
+              updateActiveButtonStates();
+          }
+  
+          function createPageButtons() {
+              const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+              const totalPages = Math.ceil(items.length / itemsPerPage);
+              const paginationContainer = document.createElement('div');
+              paginationContainer.classList.add('pagination');
+  
+              for (let i = 0; i < totalPages; i++) {
+                  const pageButton = document.createElement('button');
+                  pageButton.textContent = i + 1;
+                  pageButton.addEventListener('click', () => {
+                      currentPage = i;
+                      showPage(currentPage);
+                      updateActiveButtonStates();
+                  });
+  
+                  paginationContainer.appendChild(pageButton);
+              }
+  
+              const paginationArea = document.querySelector('.pagination-area');
+              paginationArea.innerHTML = ''; // Clear existing pagination buttons
+              paginationArea.appendChild(paginationContainer);
+          }
+  
+          function updateActiveButtonStates() {
+              const pageButtons = document.querySelectorAll('.pagination button');
+              pageButtons.forEach((button, index) => {
+                  if (index === currentPage) {
+                      button.classList.add('active');
+                  } else {
+                      button.classList.remove('active');
+                  }
+              });
+          }
+  
+          createPageButtons();
+          showPage(currentPage);
+      });
+  </script>
+  
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("createReportButton").addEventListener("click", function () {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const today = new Date().setFullYear(0,0,0,0);
+
+
+    
+    if (!startDate || !endDate) {
+      swal.fire({
+        icon: 'error',
+        title: "Missing Dates",
+        text: "Please select both start and end dates."
+      });
+      return;
+    }
+
+    if(new Date(startDate) > new Date(endDate)){
+      swal.fire({
+        icon:'error',
+        title:"Invalid Date Range",
+        text:"Start date should not be greater than end date."
+      });
+      return;
+    }
+
+    if(new Date(startDate) > today || new Date(endDate) > today){
+      swal.fire({
+        icon:'error',
+        title:"Invalid Date",
+        text:"Select proper dates"
+      })
+      return;
+    }
+
+    fetch("/admin/generate-report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ startDate, endDate }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        const reportTableBody = document.getElementById("reportTableBody");
+        const reportContainer=document.getElementById('reportContainer');
+        reportTableBody.innerHTML = "";
+        data.reportData.forEach((order) => {
+          const row = `<tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.firstName}</td>
+                        <td>${new Date(order.date).toLocaleDateString()}</td>
+                        <td>${order.totalPrice.toFixed(2)}</td>
+                        <td>${order.paymentStatus}</td>
+                        <td>${order.paymentMethod}</td>
+                      </tr>`;
+          reportTableBody.insertAdjacentHTML("beforeend", row);
+        });
+        document.getElementById("downloadButton").style.display = "block";
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+});
+
+      function downloadPdf() {
+        const element = document.getElementById("tableInput");
+        console.log(element);
+        html2pdf().from(element).save();
+      }
+    </script>
+
+    <script>
+
+      const monthNames = ["Jan","Feb","March","April","May","June","July","August","Sep","Oct","Nov","Dec"];
+
+        async function fetchSalesData(filter){
+          const response = await fetch(`/admin/sales?filter=${filter}`);
+          if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+          const data = await response.json();
+          return data;
+        }
+
+        function updateChart(filter){
+          fetchSalesData(filter).then(salesData=>{
+            
+            if (Array.isArray(salesData)) {
+
+              let labels=[];
+              let totals=[];
+
+              if(filter==="daily"){
+                 labels =Array.from({length:31},(_,i)=> i+1);
+                 totals = Array(31).fill(0);
+                 salesData.forEach(d=>{
+                totals[d._id -1]=d.total;
+              });
+            }else if(filter==="monthly"){
+              labels= monthNames;
+              totals=Array(12).fill(0);
+              salesData.forEach(d=>{
+                totals[d._id -1] = d.total;
+              });
+
+            }else if(filter ==="yearly"){
+              labels = salesData.map(d => d._id);
+              totals = salesData.map(d => d.total);
+            }
+
+      myChart.data.labels = labels;
+      myChart.data.datasets[0].data = totals;
+      myChart.update();
+    } else {
+      console.error('Sales data is not an array:', salesData);
+    }
+          })
+          .catch(error => console.error('Error fetching sales data:', error));
+        }
+
+        $(document).ready(function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            window.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels:[],
+                    datasets: [{
+                        label: 'Sales',
+                         backgroundColor: '#088178', 
+                          borderColor: '#088178',
+                        data:[]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            labels: {
+                                usePointStyle: true,
+                            },
+                        }
+                    }
+                }
+            });
+
+            updateChart('monthly'); 
+        });
+
+</script>
+<script>
+  async function paymentData() {
+    const response = await fetch("/admin/paymentChart");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }
+
+  function initializePaymentMethodsChart() {
+    var ctx = document.getElementById('paymentChart').getContext('2d');
+    window.paymentChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Payment Methods',
+          backgroundColor: ['#5897fb', '#7bcf86', '#ff9076', '#d595e5'],
+          data: []
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            labels: {
+              usePointStyle: true,
+            },
+          }
+        }
+      }
+    });
+  }
+
+  function updatePaymentMethodsChart() {
+    paymentData().then(paymentMethodsData => {
+      if (Array.isArray(paymentMethodsData)) {
+        const labels = paymentMethodsData.map(d => d._id);
+        const counts = paymentMethodsData.map(d => d.count);
+
+        paymentChart.data.labels = labels;
+        paymentChart.data.datasets[0].data = counts;
+        paymentChart.update();
+      } else {
+        console.error('Payment methods data is not an array:', paymentMethodsData);
+      }
+    })
+    .catch(error => console.error('Error fetching payment methods data:', error));
+  }
+
+  $(document).ready(function() {
+    initializePaymentMethodsChart();
+    updatePaymentMethodsChart();
+  });
+</script>
+
+
+
+
+    <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="/admin-assets/js/vendors/chart.js"></script>
+    <!-- Main Script -->
+    <script src="/admin-assets/js/main.js" type="text/javascript"></script>
+    <!-- <script
+      src="/admin-assets/js/custom-chart.js"
+      type="text/javascript"
+    ></script> -->
+
+    <style>
+      .pagination-area {
+          display: flex;
+          justify-content: center;
+      }
+
+      .pagination button {
+          margin: 0 5px;
+          padding: 5px 10px;
+          background-color: #088178;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+      }
+
+      .pagination button.active {
+          background-color: #0000003a;
+      }
+  </style>
+  </body>
+
+  <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:32:57 GMT -->
+</html>

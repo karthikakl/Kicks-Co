@@ -1,0 +1,143 @@
+<%- include('./adminLayouts/header') %>
+<body>
+    <div class="container">
+        <h1>Create New Coupon</h1>
+        <form action="/admin/addCoupon" method="POST" class="coupon-form"  id="couponCreate"  onsubmit=" return validateForm()">
+            <div class="form-group">
+                
+    <% if (typeof message !=='undefined' ) { %>
+        <span id="errorMessage" class="text-danger text-bold">
+            <%= message %>
+        </span>
+        <% } %>
+                <label for="code">Coupon Code:</label>
+                <input type="text" id="couponCode" name="coupon" class="form-control" >
+                <h6 id="codeError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="discountType">Discount Type:</label>
+                <select id="discountType" name="discountType" class="form-control" >
+                    <option disabled selected>Choose Discount Type</option>
+                    <option value="percentage">Percentage</option>
+                    <option value="fixed_amount">Fixed Amount</option>
+                    
+                </select>
+                <h6 id="typeError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="discountValue">Discount Value:</label>
+                <input type="number" id="discountValue" name="discountValue" class="form-control" >
+                <h6 id="discountError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="minAmount">Minimum Purchase Amount:</label>
+                <input type="number" id="minAmount" name="minPurchaseAmount" class="form-control" >
+                <h6 id="minPurchaseError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="maxDiscount">Maximum Discount:</label>
+                <input type="number" id="maxDiscount" name="maxDiscount" class="form-control" >
+                <h6 id="maxDiscountError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="expirationDate">Expiration Date:</label>
+                <input type="date" id="expirationDate" name="expirationDate" class="form-control" >
+                <h6 id="dateError" style="color: red;"></h6>
+            </div>
+            <div class="form-group">
+                <label for="expirationDate">Description:</label>
+                <input type="description" id="description" name="description" class="form-control" >
+                <h6 id="dsecriptionError" style="color: red;"></h6>
+            </div>
+            
+
+            <button type="submit" class="btn btn-primary mb-35" style="margin-top: 10" >Create Coupon</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    function validateForm() {
+        const form = document.getElementById('couponCreate');
+        const couponCodeInput = document.getElementById('couponCode');
+        const discountTypeSelect = document.getElementById('discountType');
+        const discountValueInput = document.getElementById('discountValue');
+        const minAmountInput = document.getElementById('minAmount');
+        const maxDiscountInput = document.getElementById('maxDiscount');
+        const expirationDateInput = document.getElementById('expirationDate');
+        const descriptionInput = document.getElementById('description');
+
+        let isValid = true;
+
+        // Clear previous error messages
+        document.getElementById('codeError').textContent = '';
+        document.getElementById('typeError').textContent = '';
+        document.getElementById('discountError').textContent = '';
+        document.getElementById('minPurchaseError').textContent = '';
+        document.getElementById('maxDiscountError').textContent = '';
+        document.getElementById('dateError').textContent = '';
+        document.getElementById('dsecriptionError').textContent = '';
+
+
+
+        // Coupon code validation with regex
+        const couponRegex = /^[A-Z0-9]+$/;
+        if (!couponRegex.test(couponCodeInput.value.trim())) {
+            document.getElementById('codeError').textContent = 'Please enter a valid coupon code (only uppercase letters and numbers allowed).';
+            isValid = false;
+        }
+
+        // Discount type validation
+        if (discountTypeSelect.value === null) {
+            document.getElementById('typeError').textContent = 'Please choose a discount type.';
+            isValid = false;
+        }
+
+        // Discount value validation
+        if (discountValueInput.value.trim() === '' || discountValueInput.value < 1) {
+            document.getElementById('discountError').textContent = 'Please enter a valid discount value.';
+            isValid = false;
+        }
+
+        // Min purchase amount validation
+        if (minAmountInput.value.trim() === '' || minAmountInput.value < 1) {
+            document.getElementById('minPurchaseError').textContent = 'Please enter a valid minimum purchase amount.';
+            isValid = false;
+        }
+
+        // Max discount validation
+        if (maxDiscountInput.value.trim() === '' || maxDiscountInput.value < 1) {
+            document.getElementById('maxDiscountError').textContent = 'Please enter a valid maximum discount.';
+            isValid = false;
+        }
+
+        // Expiration date validation
+        if (expirationDateInput.value.trim() === '') {
+            document.getElementById('dateError').textContent = 'Please select an expiration date.';
+            isValid = false;
+        }
+        if (descriptionInput.value.trim() === '') {
+            document.getElementById('dsecriptionError').textContent = 'This field is required.';
+            isValid = false;
+        }
+
+
+        return isValid;
+    }
+</script>
+
+
+<script>
+    
+    const errorMessage = document.getElementById('errorMessage');
+    if (errorMessage) {
+       
+        setTimeout(function() {
+            errorMessage.style.display = 'none';
+        }, 3000); 
+    }
+</script>
+
+
+
+<%- include('./adminLayouts/footer') %>

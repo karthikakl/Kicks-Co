@@ -1,0 +1,28 @@
+<%- include('./userLayout/header') %>
+
+    <div class="container2">
+    <h1>Add Address</h1>
+    <form action="addAddress" method="POST" id="addForm">
+        <label for="houseName">House Name:</label>
+        <input type="text" id="houseName" name="houseName" required><br><br>
+
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required><br><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required><br><br>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required><br><br>
+
+        <label for="pinCode">Pin Code:</label>
+        <input type="text" id="pinCode" name="pinCode" required><br><br>
+
+        <!-- Assuming you have a user ID to associate with the address -->
+        <input type="hidden" id="userId" name="userId" value="">
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<%- include('./userLayout/footer') %>

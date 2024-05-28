@@ -1,0 +1,107 @@
+<%- include('./adminLayouts/header') %>
+
+<body>
+    <div class="container">
+        <h1>Create New Offer</h1>
+        <form action="/admin/addOffer" method="POST" class="offer-form" id="offerCreate" onsubmit=" return validateForm()">
+            <div class="form-group">
+                <label for="productOrCategory">Product or Category:</label>
+                <select id="productOrCategory" name="productOrCategory" class="form-control" required>
+                    <option disabled selected>Select Option</option>
+                    <option value="product">Product</option>
+                    <option value="category">Category</option>
+
+                </select>
+                <h6 id="typeErrorMessage" style="color: red;"></h6>
+            </div>
+            <div class="form-group" id="productSelect" style="display: none;">
+                <label for="product">Product:</label>
+                <select id="product" name="product" class="form-control">
+                    <option disabled selected>Select Product</option>
+                    <% products.forEach(product => { %>
+                        <option value="<%= product._id %>"><%= product.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group" id="categorySelect" style="display: none;">
+                <label for="category">Category:</label>
+                <select id="category" name="category" class="form-control">
+                    <option disabled selected>Select Category</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category._id %>"><%= category.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="discountPercent">Discount Percentage:</label>
+                <input type="number" id="discountPercent" name="discountPercent" class="form-control" >
+            </div>
+            <h6 id="discountErrorMessage" style="color: red;"></h6>
+            <div class="form-group">
+                <label for="maxDiscountAmount">Maximum Discount Amount:</label>
+                <input type="number" id="maxDiscountAmount" name="maxDiscountAmount" class="form-control" >
+            </div>
+            <h6 id="maxDiscountMessage" style="color: red;"></h6>
+            <div class="form-group">
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="date" id="expiryDate" name="expiryDate" class="form-control" >
+            </div>
+            <button type="submit" class="btn btn-primary mb-35" style="margin-top: 10">Create Offer</button>
+        </form>
+    </div>
+
+    <script>
+        const productOrCategory = document.getElementById('productOrCategory');
+        const productSelect = document.getElementById('productSelect');
+        const categorySelect = document.getElementById('categorySelect');
+
+        productOrCategory.addEventListener('change', function() {
+            if (this.value === 'product') {
+                productSelect.style.display = 'block';
+                categorySelect.style.display = 'none';
+            } else if (this.value === 'category') {
+                productSelect.style.display = 'none';
+                categorySelect.style.display = 'block';
+            } else {
+                productSelect.style.display = 'none';
+                categorySelect.style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+       function validateForm() {
+    const productOrCategory = document.getElementById('productOrCategory').value;
+    const discountPercent = document.getElementById('discountPercent').value;
+    const maxDiscountAmount = document.getElementById('maxDiscountAmount').value;
+
+    const typeErrorMessage = document.getElementById('typeErrorMessage');
+    const discountError = document.getElementById('discountErrorMessage');
+    const maxDiscountError = document.getElementById('maxDiscountMessage');
+
+    typeErrorMessage.textContent = '';
+    discountError.textContent = '';
+    maxDiscountError.textContent = '';
+
+    if (productOrCategory === 'product' || productOrCategory === 'category') {
+        // Check if product or category is selected
+        if (discountPercent === '' || discountPercent < 0) {
+            discountError.textContent = 'Discount percentage must be a positive number.';
+            return false; // Prevent form submission
+        }
+
+        if (maxDiscountAmount === '' || maxDiscountAmount < 0) {
+            maxDiscountError.textContent = 'Maximum discount amount must be a positive number.';
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    } else {
+        typeErrorMessage.textContent = 'Please choose a discount type.';
+        return false; // Prevent form submission
+    }
+}
+
+    </script>
+</body>
+
+<%- include('./adminLayouts/footer') %>

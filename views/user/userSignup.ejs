@@ -1,0 +1,263 @@
+<%- include('./userLayout/header') %>
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+
+                <div class="breadcrumb  shoes-title1">
+                    <a href="index.html" rel="nofollow" class="shoes-title1">Home</a>
+                    <span></span> Pages
+                    <span></span> Register
+                </div>
+            </div>
+        </div>
+        <section class="pt-80 pb-150 form-background2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-6 offset-lg-7">
+                                <div class="login_wrap2 widget-taber-content p-30 background-white border-radius-10">
+                                    <div class="padding_eight_all ">
+                                        <div class="heading_s1">
+                                            <h3 class="mb-30 shoes-title1">Create an Account</h3>
+                                        </div>
+                                        <p class="mb-50 font-sm shoes-title">
+                                            Your personal data will be used to support your experience throughout this
+                                            website, to manage access to your account, and for other purposes described
+                                            in our privacy policy
+                                        </p>
+
+                                        <% if (typeof message !=='undefined' ) { %>
+                                            <span id="errorMessage" class="text-danger text-bold">
+                                                <%= message %>
+                                            </span>
+                                            <% } %>
+
+                                                <form method="post" id="signupForm" action="/insertUser">
+                                                    <div class="form-group">
+                                                        <input type="text" id="username" name="name"
+                                                            placeholder="Username">
+                                                        <h6 id="usernameErrorMessages" style="color: red;"></h6>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" id="email" name="email" placeholder="Email">
+                                                        <h6 id="emailErrorMessages" style="color: red;"></h6>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input id="number" name="number" placeholder="Number">
+                                                        <h6 id="numberErrorMessage" style="color: red;"></h6>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input id="password" type="password" name="password"
+                                                            placeholder="Password">
+                                                        <h6 id="passwordErrorMessage" style="color: red;"></h6>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="password" id="confirmpass"
+                                                            placeholder="Confirm password">
+                                                        <h6 id="confirmErrorMessage" style="color: red;"></h6>
+                                                    </div>
+                                                    <div class="login_footer form-group">
+                                                        <div class="chek-form">
+                                                            <div class="custome-checkbox">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    name="checkbox" id="exampleCheckbox12" value="">
+                                                                <label class="form-check-label"
+                                                                    for="exampleCheckbox12"><span>I agree to terms &amp;
+                                                                        Policy.</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <a href="page-privacy-policy.html"><i
+                                                                class="fi-rs-book-alt mr-5 text-muted "></i>Lean
+                                                            more</a>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit"
+                                                            class="btn btn-fill-out btn-block hover-up ">Submit &amp;
+                                                            Register</button>
+                                                    </div>
+                                                </form>
+                                                <div class="divider-text-center mt-15 mb-15">
+                                                    <span> or</span>
+                                                </div>
+
+                                                <div class="text-muted text-center">Already have an account? <a
+                                                        href="/">Sign in now</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+
+    <script>
+
+
+        setTimeout(function () {
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }, 3000);
+
+
+        const signupForm = document.getElementById('signupForm')
+        signupForm.addEventListener('submit', validateSignup)
+
+        function validateSignup(event) {
+            event.preventDefault();
+
+
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const number = document.getElementById('number');
+            const password = document.getElementById('password');
+            const confirmpass = document.getElementById('confirmpass');
+
+            const usernameErrorMessages = document.getElementById('usernameErrorMessages');
+            const emailErrorMessages = document.getElementById('emailErrorMessages');
+            const numberErrorMessage = document.getElementById('numberErrorMessage');
+            const passwordErrorMessage = document.getElementById('passwordErrorMessage');
+            const confirmErrorMessage = document.getElementById('confirmErrorMessage');
+
+            if (email.value.trim() == '' && number.value.trim() == '' && password.value.trim() == '' && confirmpass.value.trim() == '') {
+                // usernameErrorMessages.innerHTML= 'Please enter your name';
+                emailErrorMessages.innerHTML = 'plaese enter an email address';
+                numberErrorMessage.innerHTML = 'Please enter phone number';
+                passwordErrorMessage.innerHTML = 'Please enter password';
+                confirmErrorMessage.innerHTML = 'Please confirm your password';
+                setTimeout(() => {
+                    // usernameErrorMessages.innerHTML = ''; 
+                    emailErrorMessages.innerHTML = '';
+                    numberErrorMessage.innerHTML = '';
+                    passwordErrorMessage.innerHTML = '';
+                    confirmErrorMessage.innerHTML = '';
+
+                }, 3000)
+            }
+
+            //username
+
+            if (username.value.trim() === '') {
+                usernameErrorMessages.innerHTML = 'This field is required!!';
+                setTimeout(() => {
+                    usernameErrorMessages.innerHTML = '';
+                }, 3000)
+                return false;
+            }
+
+            if (!validateName(username.value.trim())) {
+                usernameErrorMessages.innerHTML = 'Please enter valid name';
+                setTimeout(() => {
+                    usernameErrorMessages.innerHTML = ''
+                }, 3000)
+                return false;
+            }
+
+            function validateName(username) {
+                const nameRegex = /^[A-Z]/;
+                return nameRegex.test(username);
+            }
+
+            //email 
+
+            if (email.value.trim() === '') {
+                emailErrorMessages.innerHTML = 'This Field is required !!';
+                setTimeout(() => {
+                    emailErrorMessages.innerHTML = '';
+                }, 6000)
+                return false;
+            }
+
+            if (!validateEmail(email.value.trim())) {
+                emailErrorMessages.innerHTML = 'Invalid email address';
+                setTimeout(() => {
+                    emailErrorMessages.innerHTML = ''
+                }, 6000)
+                return false;
+            }
+
+            function validateEmail(email) {
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{3}$/;
+                return emailRegex.test(email);
+            }
+
+            //number
+
+            // if(number.value.trim() === ''){
+            //     numberErrorMessage.innerHTML    = 'This field is required';
+            //     setTimeout(()=>{
+            //         numberErrorMessage.innerHTML    = ''
+            //     },6000)
+            //     return false;
+            // }
+
+            if (!validateNum(number.value.trim())) {
+
+                numberErrorMessage.innerHTML = 'Please enter valid Phone number';
+                setTimeout(() => {
+                    numberErrorMessage.innerHTML = '';
+                }, 6000)
+                return false;
+            }
+
+            function validateNum(number) {
+                const numRegex = /^[0-9]{10}$/;
+                return numRegex.test(number);
+            }
+
+            //password
+
+            if (password.value.trim() === '') {
+                passwordErrorMessage.innerHTML = 'Please enter name'
+                setTimeout(() => {
+                    passwordErrorMessage.innerHTML = ''
+                }, 6000)
+                return false;
+            }
+
+            if (!validatePass(password.value.trim())) {
+                passwordErrorMessage.innerHTML = 'Please enter a Alphanumeric Password minimum 6 letter!!';
+                setTimeout(() => {
+                    passwordErrorMessage.innerHTML = '';
+                }, 6000)
+                return false;
+            }
+
+            function validatePass(password) {
+                const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/
+                return passRegex.test(password)
+            }
+
+            //confirm password
+
+            if (confirmpass.value.trim() === '') {
+                confirmErrorMessage.innerHTML = 'This field id reqired';
+                setTimeout(() => {
+                    confirmErrorMessage.innerHTML = '';
+                }, 6000)
+                return false;
+            }
+
+            if (confirmpass.value != password.value) {
+                confirmErrorMessage.innerHTML = 'Passwords not matched';
+                setTimeout(() => {
+                    confirmErrorMessage.innerHTML = '';
+                }, 6000)
+                return false;
+            }
+
+            signupForm.submit();
+
+        }
+
+    </script>
+
+    <%- include('./userLayout/footer') %>

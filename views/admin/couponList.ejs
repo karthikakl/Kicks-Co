@@ -1,0 +1,218 @@
+<%- include('./adminLayouts/header') %>
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Coupon Codes </h2>
+            <p>Add, edit or delete a category</p>
+        </div>
+        <div>
+           
+            <a href="/admin/addCodePage" class="btn btn-primary"><i
+                    class="material-icons md-plus"></i>Add new Coupon Codes</a>
+            <!-- <a href="/admin/categories/addCategory" class="btn btn-primary" >Add New Category</a> -->
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="tableInput">
+                            <thead>
+                                <tr>
+                                   
+                                    <th>Code</th>
+                                    <th>Discount Type</th>
+                                    <th>Discount Value</th>
+                                    <th>Minimum Purchase Amount</th>
+                                    <th>Maximum Discount</th>
+                                    <th>Expiration</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% if(coupons && coupons.length> 0 ) { %>
+                                    <% coupons.sort((a,b)=> new Date(b.createdAt)- new Date(a.createdAt)) %>
+                                    <% coupons.forEach(coupon=> { %>
+                                        <tr>
+                                            <td><b>
+                                                    <%= coupon.
+                                                    coupon %>
+                                                </b></td>
+                                            <td>
+                                                <%= 
+                                                coupon.
+                                                  discountType %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.discountValue %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.minPurchaseAmount %>
+                                            </td>
+                                            <td>
+                                                <%= coupon.maxDiscount %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(coupon.expirationDate).toLocaleDateString() %>
+                                            </td>
+                                            <td class="text-end">                                   
+                                                        <a class="btn btn-sm btn-danger rounded font-sm mt-15"
+                                                            onclick="deleteCoupon('<%= coupon._id  %>')">Delete</a>
+                                                                                             </td>
+                                        </tr>
+                                        <% }) %>
+
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="6"
+                                                        style="font-size: 18px; color: red; text-align: center;">No
+                                                        Coupons available!!</td>
+                                                </tr>
+                                                <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start" id="paginationList"></ul>
+        </nav>
+    </div>
+
+
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const content = document.querySelector('.table');
+    const itemsPerPage = 5;
+    let currentPage = 0;
+    const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+
+
+    function showPage(page) {
+        const startIndex = page * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        items.forEach((item, index) => {
+            item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+        });
+
+        updateActiveButtonStates();
+    }
+    function createPageButtons() {
+        const totalPages = Math.ceil(items.length / itemsPerPage);
+        const paginationContainer = document.createElement('div');
+        // const paginationDiv = document.body.appendChild(paginationContainer);
+        paginationContainer.classList.add('pagination');
+
+        for (let i = 0; i < totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i + 1;
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                showPage(currentPage);
+                updateActiveButtonStates();
+            });
+
+
+            paginationContainer.appendChild(pageButton);
+        }
+
+        document.querySelector('.pagination-area').appendChild(paginationContainer);
+
+    }
+    function updateActiveButtonStates() {
+        const pageButtons = document.querySelectorAll('.pagination button');
+        pageButtons.forEach((button, index) => {
+            if (index === currentPage) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+    createPageButtons();
+    showPage(currentPage);
+
+})
+
+</script>
+
+
+<script>
+    function deleteCoupon(couponId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to delete this coupon code!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteCoupon/${couponId}`, { method: 'GET' })
+                        .then(res => {
+                            if (res.ok) {
+                                Swal.fire({
+                                    title: "Deleted",
+                                    text: "The coupon code has been deleted.",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                setTimeout(() => {
+                                    location.reload()
+                                }, 2000)
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Something went wrong",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        });
+                } else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Cancelled",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+</script>
+
+<style>
+    .pagination-area {
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 2px 5px;
+        background-color:#484f4f;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .pagination button.active {
+        background-color: #0000003a;
+    }
+</style>
+
+<%- include('./adminLayouts/footer') %>

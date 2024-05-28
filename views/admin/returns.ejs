@@ -1,0 +1,259 @@
+<%- include('./adminLayouts/header') %>
+<section class="content-main">
+    <div class="content-header">
+        <h2 class="content-title">Return requests</h2>
+    </div>
+    <div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover" id="tableInput">
+                <thead>
+                    <tr>
+                        
+                        <!-- <th>Product</th> -->
+                        <th>User</th>
+                        <th>Reason</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(returns && returns.length >0) { %>
+                    <% returns.forEach(returnItem => { %>
+                    <tr>
+                        
+                        <!-- <td>
+                            <%= returnItem.product %>
+                        </td> -->
+                        <td>
+                            <%= returnItem.user.name %>
+                        </td>
+                        <td><%= returnItem.reason %></td>
+                        <td class="text-end">
+                            <% if(returnItem.status === "requested") { %>
+                                <button type="button" id="approveButton" class="btn btn-sm btn-brand rounded font-sm mt-15"
+                                    onclick="ReturnApprove('<%= returnItem._id %>')">Approve</button>
+                                <button type="button" id="rejectButton" class="btn btn-sm btn-brand rounded font-sm mt-15"
+                                    onclick="ReturnReject('<%= returnItem._id %>')">Reject</button>
+                            <% } else { %>
+                                <% if(returnItem.status === "rejected") { %>
+                                    <span class="badge bg-danger">Rejected</span>
+                                <% } else if(returnItem.status === "approved") { %>
+                                    <span class="badge bg-success">Approved</span>
+                                <% } %>
+                            <% } %> 
+                        </td>
+                    </tr>
+                    <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" style="font-size: 18px; color: red; text-align: center;">
+                                No returns available!!
+                            </td>
+                        </tr>
+                    <% } %>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start" id="paginationList"></ul>
+        </nav>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const content = document.querySelector('.table');
+        const itemsPerPage = 6;
+        let currentPage = 0;
+        const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+    
+    
+        function showPage(page) {
+            const startIndex = page * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            items.forEach((item, index) => {
+                item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+            });
+    
+            updateActiveButtonStates();
+        }
+        function createPageButtons() {
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            const paginationContainer = document.createElement('div');
+            // const paginationDiv = document.body.appendChild(paginationContainer);
+            paginationContainer.classList.add('pagination');
+    
+            for (let i = 0; i < totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i + 1;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updateActiveButtonStates();
+                });
+    
+    
+                paginationContainer.appendChild(pageButton);
+            }
+    
+            document.querySelector('.pagination-area').appendChild(paginationContainer);
+    
+        }
+        function updateActiveButtonStates() {
+            const pageButtons = document.querySelectorAll('.pagination button');
+            pageButtons.forEach((button, index) => {
+                if (index === currentPage) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+    
+        createPageButtons();
+        showPage(currentPage);
+    
+    })
+    
+    </script>
+
+<script>
+
+function ReturnApprove(returnId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to approve this return request?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, approve it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            fetch(`/admin/retrunApprove/${returnId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                   
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire(
+                        'Approved!',
+                        'The return request has been approved.',
+                        'success'
+                    ).then(() => {
+                       
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Failed to approve the return request. Please try again.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    'Error!',
+                    'An error occurred while processing the request. Please try again.',
+                    'error'
+                );
+            });
+        }
+    });
+}
+</script>
+<script>
+
+    function ReturnReject(returnId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to reject this return request?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reject it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                fetch(`/admin/retrunReject/${returnId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                       
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'Rejected!',
+                            'The return request has been rejected.',
+                            'success'
+                        ).then(() => {
+                            
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Failed to approve the return request. Please try again.',
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred while processing the request. Please try again.',
+                        'error'
+                    );
+                });
+            }
+        });
+    }
+    </script>
+
+<style>
+    .pagination-area {
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 2px 5px;
+        background-color:#484f4f;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .pagination button.active {
+        background-color: #0000003a;
+    }
+</style>
+<%- include('./adminLayouts/footer') %>

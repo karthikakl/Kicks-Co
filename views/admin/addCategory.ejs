@@ -1,0 +1,71 @@
+<%- include('./adminLayouts/header') %>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+    <h2 class="mb-4">Add a New Category</h2>
+
+    <% if (typeof message !=='undefined' ) { %>
+        <span id="errorMessage" class="text-danger text-bold">
+            <%= message %>
+        </span>
+        <% } %>
+        
+<div class="col-md-6">
+    <form method="post" action="/admin/Categories/addCategory" id="categoryForm">
+        <div class="mb-4">
+            <label for="product_name" class="form-label">Name</label>
+            <input type="text" placeholder="Type here" class="form-control" id="name" name="name"/>
+            <h6 id="nameErrorMessage" style="color: red;"></h6>
+        </div>
+        <div class="d-grid">
+            <button type="submit"  class="btn btn-primary">Create category</button>
+        </div>
+    </form>
+</div>
+</div>
+
+
+
+
+<script>
+
+    const categoryForm = document.getElementById('categoryForm')
+    categoryForm.addEventListener('submit',validateForm)
+
+    function validateForm(event){
+        event.preventDefault();
+
+        const name = document.getElementById('name');
+       
+
+        const nameErrorMessage = document.getElementById('nameErrorMessage');
+        
+
+        if(name.value.trim()==''){
+            nameErrorMessage.innerHTML= 'Please enter category name' 
+            setTimeout(()=>{
+                nameErrorMessage.innerHTML=''
+            },3000)
+
+            return false;
+        }
+
+        if (!validateForm(name.value.trim())) {
+            nameErrorMessage.innerHTML = 'Please enter a valid category name';
+                setTimeout(() => {
+                    nameErrorMessage.innerHTML = ''
+                }, 3000)
+                return false;
+            }
+
+            function validateForm(username) {
+                const nameRegex = /^[A-Z]/;
+                return nameRegex.test(username);
+            }
+
+            categoryForm.submit();
+        
+    }
+    
+
+
+</script>
+<%- include('./adminLayouts/footer') %>

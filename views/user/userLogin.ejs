@@ -1,0 +1,131 @@
+<%- include('./userLayout/header') %>
+
+
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <h3 class="shoes-title1">Kicks & Co</h3>
+                    
+                </div>
+                    
+                    <!-- <span></span> Pages
+                    <span></span> Login -->
+                </div>
+            </div>
+        </div>
+        <section class="pt-80 pb-150 form-background">
+            <div class="container ">
+                <div class="row ">
+                <div class="col-lg-6 offset-lg-7 ">
+                    
+                        <!-- <div class="text-center m-auto"> -->
+                            <div
+                                class="login_wrap widget-taber-content p-30 background-white border-radius-10 ">
+                                <div class="form" >
+                                    <div class="heading_s1">
+                                        <h3 class="mb-30 shoes-title">Login</h3>
+
+                                        <% if (typeof message !=='undefined' ) { %>
+                                            <span class="text-danger text-bold">
+                                                <%= message %>
+                                            </span>
+                                            <% } %>
+                                    </div>
+                                    <form method="post" id="loginForm" action="/home" >
+                                        <div class="form-group">
+                                            <input type="text" id="email" name="email" placeholder="Your Email">
+                                            <h6 id="emailerrorMessages" style="color: red;">
+                                            </h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="password" type="password" name="password" placeholder="Password">
+                                            <h6 id="passwordErrorMessage" style="color: red;">
+                                            </h6>
+                                        </div>
+                                        <div class="login_footer form-group">
+                                            <!-- <div class="chek-form">
+                                                <div class="custome-checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="checkbox"
+                                                        id="exampleCheckbox1" value="">
+                                                    <label class="shoes-title"
+                                                        for="exampleCheckbox1" ><span>Remember me</span></label>
+                                                </div>
+                                            </div> -->
+                                            <a class="shoes-title" href="/forgotPassword">Forgot password?</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-fill-out btn-block">Log in</button>
+                                        </div>
+
+
+                                        <div class="text-muted text-center">New User? <a href="/signup" class="shoes-title">Sign up</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                    
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', validateLoginform);
+
+        function validateLoginform(event) {
+            event.preventDefault()
+
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const emailerrorMessages = document.getElementById('emailerrorMessages');
+            const passwordErrorMessage = document.getElementById('passwordErrorMessage')
+
+            
+            if (email.value.trim() == '' && password.value.trim() == '') {
+                emailerrorMessages.innerHTML = 'please enter a valid email address!!';
+                passwordErrorMessage.innerHTML = 'Please enter a password!!';
+                setTimeout(() => {
+                    emailerrorMessages.innerHTML = ''
+                    passwordErrorMessage.innerHTML = ''
+                }, 3000)
+                return;
+            }
+            if (!validateEmail(email.value.trim())) {
+                emailerrorMessages.innerHTML = 'please enter a valid email address!!';
+                setTimeout(() => {
+                    emailerrorMessages.innerHTML = ''
+                }, 3000)
+                return;
+            }
+
+            function validateEmail(email) {
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return emailRegex.test(email);
+            }
+
+
+            //validate password
+
+            if (!validatePassword(password.value.trim())) {
+                passwordErrorMessage.innerHTML = 'Please enter a Alphanumeric Password minimum 6 letter!!';
+                setTimeout(() => {
+                    passwordErrorMessage.innerHTML = ''
+                }, 3000)
+                return;
+            }
+
+            function validatePassword(password) {
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+                return passwordRegex.test(password)
+            }
+            loginForm.submit();
+
+        }
+    </script>
+
+    <%- include('./userLayout/footer') %>

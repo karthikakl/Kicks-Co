@@ -1,0 +1,232 @@
+<%- include('./adminLayouts/header') %>
+
+
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Order List </h2>
+
+            </div>
+
+        </div>
+        <div class="card mb-4">
+            <header class="card-header">
+                <div class="row gx-3">
+                    <div class="col-lg-4 col-md-6 me-auto">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search ID..."
+                            class="form-control">
+                    </div>
+                    <div class="col-lg-2 col-6 col-md-3">
+                        <select class="form-select" id="statusFilter">
+                            <option>Show all</option>
+                            <option>Cancelled</option>
+                            <option>Delivered</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
+
+                </div>
+            </header> <!-- card-header end// -->
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-hover" id="tableInput">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col"></th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col" class="text-end"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(order && order.length> 0 ) { %>
+                                <% order.sort((a,b)=> new Date(b.date)- new Date(a.date)) %>
+                                <% order.forEach( order=> { %>
+
+                                    <tr>
+                                        <td>
+                                            <%= order._id %>
+                                        </td>
+                                        <% if(order.username) { %>
+                                            <td><b><%= order.
+                                                username %></b></td>
+                                      <%  }else{ %>
+                                        <td><b>Unknown %></b></td>
+                                     <%   } %>
+                                        
+                                        <td><template class="__cf_email__"
+                                                data-cfemail="aec3cfdcd8c7c0eecbd6cfc3dec2cb80cdc1c3">[email&#160;protected]</template>
+                                        </td>
+                                        <td>
+                                            <%= order.total %>
+                                        </td>
+                                        <td><span
+                                                class="badge rounded-pill 
+                                                <% if(order.status === 'pending' ){ %>
+                                                    alert-warning
+                                              <% }  else if (order.status === 'cancelled'){ %>
+                                                    alert-danger
+                                             <% }  else if (order.status === 'delivered') { %>
+                                                    alert-success 
+                                            <% } %> "
+                                                 
+                                                data-status="<%= order.status.toLowerCase() %>">
+                                                <%= order.status %>
+                                            </span></td>
+                                        <td>
+                                            <%= new Date(order.date).toLocaleDateString('en-US') %>
+                                        </td>
+                                        <td class="text-end">
+                                            <%if(order){%>
+
+                                                <a href="/admin/orderDetails?id=<%=order._id%>"
+                                                    class="btn btn-md rounded font-sm">Detail</a>
+                                                    <%}%>
+                                            
+                                        </td>
+                                    </tr>
+
+                                    <% }) %>
+                                        <% } else { %>
+                                            <div>
+                                                <h1 style="font-size: 18px; color: red; text-align: center;">No orders
+                                                    to show.</h1>
+                                            </div>
+                                            <% } %>
+                        </tbody>
+                    </table>
+
+                </div> <!-- table-responsive //end -->
+            </div> <!-- card-body end// -->
+        </div> <!-- card end// -->
+
+        <div class="pagination-area mt-15 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start" id="paginationList"></ul>
+            </nav>
+        </div>
+    </section> <!-- content-main end// -->
+
+    <script>
+        //search
+
+        function myFunction() {
+            const input = document.getElementById('myInput');
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById('tableInput')
+            const tr = table.getElementsByTagName('tr')
+
+            for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName('td')[0];
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = " "
+                    } else {
+                        tr[i].style.display = "none"
+                    }
+                }
+            }
+        }
+
+
+        //filter
+
+        const selectElement = document.getElementById('statusFilter');
+        selectElement.addEventListener('change', function (event) {
+            const selectOption = event.target.value.toLowerCase();
+            const items = document.querySelectorAll('.badge');
+
+            items.forEach(item => {
+                const itemStatus = item.dataset.status;
+
+                if (selectOption === 'show all' || selectOption === itemStatus) {
+                    item.parentElement.parentElement.style.display = 'table-row';
+                } else {
+                    item.parentElement.parentElement.style.display = 'none';
+                }
+            })
+        })
+
+        //pagination
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const content = document.querySelector('.table');
+            const itemsPerPage = 5;
+            let currentPage = 0;
+            const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+
+
+            function showPage(page) {
+                const startIndex = page * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                items.forEach((item, index) => {
+                    item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+                });
+
+                updateActiveButtonStates();
+            }
+            function createPageButtons() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                const paginationContainer = document.createElement('div');
+                // const paginationDiv = document.body.appendChild(paginationContainer);
+                paginationContainer.classList.add('pagination');
+
+                for (let i = 0; i < totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i + 1;
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        showPage(currentPage);
+                        updateActiveButtonStates();
+                    });
+
+
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                document.querySelector('.pagination-area').appendChild(paginationContainer);
+
+            }
+            function updateActiveButtonStates() {
+                const pageButtons = document.querySelectorAll('.pagination button');
+                pageButtons.forEach((button, index) => {
+                    if (index === currentPage) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+
+            createPageButtons();
+            showPage(currentPage);
+
+        })
+    </script>
+
+    <style>
+        .pagination-area {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #088178;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #0000003a;
+        }
+    </style>
+
+    <%- include('./adminLayouts/footer') %>

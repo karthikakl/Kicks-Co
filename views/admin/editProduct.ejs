@@ -1,0 +1,492 @@
+<%- include('./adminLayouts/header') %>
+
+    <section class="content-main">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">
+                    <h2 class="content-title">Edit Product</h2>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Basic</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin/products/editproduct" method="Post" enctype="multipart/form-data"
+                            onsubmit="return validateForm()" id="addForm">
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Product name</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="productname"
+                                    name="name" value="<%= productData.name %>">
+                                <input type="hidden" name="id" value="<%= productData._id %>">
+                                <h6 id="nameErrorMessage" style="color: red;"></h6>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label"> Description</label>
+                                <textarea placeholder="Type here" id="description" class="form-control" rows="4"
+                                    name="description"><%= productData.description %></textarea>
+                                <h6 id="descriptionErrorMessage" style="color: red;"></h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Orginal price</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="$" id="orginalprice" type="text" class="form-control"
+                                                name="orginalPrice" value="<%= productData.orginalPrice %>">
+                                        </div>
+                                        <h6 id="ogpriceErrorMessage" style="color: red;"></h6>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Offer price</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="$" id="offerprice" type="text" class="form-control"
+                                                name="offerPrice" value="<%= productData.offerPrice %>">
+                                        </div>
+                                        <h6 id="ofpriceErrorMessage" style="color: red;"></h6>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label class="form-label">Brand</label>
+                                    <select class="form-select" name="brand" id=" brandname">
+                                         <!-- <option><%= productData.
+                                            brand
+                                             %></option>
+                                        <option> Adidas </option>
+                                        <option> New Balance </option>
+                                        <option> Puma </option>
+                                        <option> Asics </option>
+                                        <option> Vans </option>
+                                        <option> Converse </option> -->
+
+                                        <% if(productData.brand === 'Adidas') { %>
+                                            <option selected>Adidas</option>
+                                            <% }else { %>
+                                            <option>Adidas</option>
+                                          <%  } %>
+                                          <% if(productData.brand === 'New Balance') { %>
+                                            <option selected>New Balance</option>
+                                            <% }else { %>
+                                            <option>New Balance</option>
+                                          <%  } %>
+                                          <% if(productData.brand === 'Puma') { %>
+                                            <option selected>Puma</option>
+                                            <% }else { %>
+                                            <option>Puma</option>
+                                          <%  } %>
+                                          <% if(productData.brand === 'Asics') { %>
+                                            <option selected>Asics</option>
+                                            <% }else { %>
+                                            <option>Asics</option>
+                                          <%  } %>
+                                          <% if(productData.brand === 'Vans') { %>
+                                            <option selected>Vans</option>
+                                            <% }else { %>
+                                            <option>Vans</option>
+                                          <%  } %>
+                                          <% if(productData.brand === 'Converse') { %>
+                                            <option selected>Converse</option>
+                                            <% }else { %>
+                                            <option>Converse</option>
+                                          <%  } %>
+                                    </select>
+                                    <h6 id="brandErrorMessage" style="color: red;"></h6>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-label">Sizes</label>
+                                    <% const availableSizes = [6,7,8,9] %>
+                                    <% availableSizes.forEach(size => { %>
+                                        <div>
+                                        <input type="checkbox" id="size<%= size %>" name="sizes[]" value="<%= size %>"<%= productData.sizes.some(s=>s.size === size) ? 'checked':'' %>>
+                                        <label class="form-label"><%= size %></label>
+                                        <input type="number" placeholder="Stock" class="form-control" id="stockForSize<%= size %>" name="stockForSize<%= size %>" <%= productData.sizes.some(s => s.size === size) ? '' : '' %> value="<%= productData.sizes.find(s => s.size === size) ? productData.sizes.find(s => s.size === size).stock : '' %>">
+                                    </div>
+                                    <% }) %>
+                                    <% if (!productData || !productData.sizes || productData.sizes.length === 0) { %>
+                                        <p>No sizes available.</p>
+                                    <% } %>
+                                    <h6 id="sizeErrorMessage" style="color: red;"></h6>
+                                </div>
+                                
+
+                                <!-- <div class="mb-4">
+                                    <label class="form-label">Review</label>
+                                    <input type="text" placeholder="%" class="form-control" id="product_name"
+                                        value="<%= productData.review %>" name="review">
+                                    <h6 id="reviewErrorMessage" style="color: red;"></h6>
+                                </div> -->
+
+
+                                <div class="col-lg-12">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h4>Media</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="input-upload" style="white-space: nowrap; overflow-x: auto;"
+                                                id="imageContainer">
+                                                <% productData.image.forEach(image=> { %>
+                                                    <div class="image-container"
+                                                        style="display: inline-block; max-width: 150px;">
+                                                        <span class="ms-10"> <img
+                                                                src="/product-images/<%= image.filename %>"
+                                                                alt="Product Image"></span>
+
+                                                        <button class="btn btn-danger btn-sm delete-image-btn"
+                                                            data-image-id="<%= image._id %>"  data-filename="<%= image.filename %>"  >Delete</button>
+                                                    </div>
+                                                    <% }) %>
+
+                                                       
+                                            </div>
+                                        </div>
+                                        
+                                        <h6 id="imageErrorMessage" style="color: red;"></h6>
+                                    </div>
+                                    <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="input-upload">
+                                            <div id="imageContainer2">
+                                                <img src="" alt="">
+                                            </div>
+            
+                                            <input class="form-control" type="file" name="images" multiple id="addImageName">
+                                            <span id="fileCount">0 files selected</span>
+            
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row gx-2">
+                                                <div class="col-sm-6 mb-3">
+                                                    <label class="form-label">Category</label>
+                                                    <select class="form-select" name="category" id="categoryname">
+                                                        <% categories.forEach(element => { %>
+                                                             <% if(element.name === productData.category) { %>
+
+                                                                <option value="<%= element.name %>" selected><%= element.name %></option>
+                                                                <% } else { %>
+                                                                    <option value="<%= element.name %>"><%= element.name %></option>
+                                                               <% } %>
+
+                                                         <option value="<%= element.name %>">
+                                                        <% productData.category %></option>
+                                                        <% }) %>
+
+                                                    </select>
+                                                    <h6 id="CategoryErrorMessage" style="color: red;"></h6>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const input = document.getElementById("addImageName");
+        const imageContainer = document.getElementById("imageContainer2");
+        const fileCountDisplay = document.getElementById("fileCount");
+
+        input.addEventListener("change", () => {
+            // Clear previous images
+            imageContainer.innerHTML='';
+            fileCountDisplay.textContent = `${input.files.length} file(s) selected`
+
+          
+
+            
+            for (let i = 0; i < input.files.length; i++) {
+                const imageWrapper = document.createElement("span");
+                const image = document.createElement("img");
+                const deleteButton = document.createElement("button");
+
+                image.src = URL.createObjectURL(input.files[i]);
+                image.style.width = "100px"; 
+                image.style.height = "100px"; 
+                deleteButton.innerHTML='&#10006;';
+                deleteButton.addEventListener('click',()=>{
+                    imageWrapper.remove();
+                    deleteButton.remove();
+                    input.files = Array.from(input.files).filter((_, index) => index !== i);
+                    fileCountDisplay.textContent = `${input.files.length} file(s) selected`;
+                });
+
+                imageWrapper.appendChild(image);
+                imageContainer.appendChild(deleteButton);
+                imageContainer.appendChild(imageWrapper);
+               
+            }
+        });
+    </script>
+
+    <script>
+        
+
+        $(document).ready(function () {
+    $('.delete-image-btn').click(function (event) {
+        event.preventDefault();
+
+        var imageId = $(this).data('image-id');
+        var filename = $(this).data('filename');
+        var $button = $(this);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to delete this image?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/deleteimage',
+                    type: 'DELETE',
+                    data: { imageId: imageId, filename: filename },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your image has been deleted.',
+                                'success'
+                            )
+                            $button.closest('.image-container').remove();
+                        } else {
+                            Swal.fire(
+                                'Failed!',
+                                'Failed to delete image.',
+                                'error'
+                            )
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred: ' + error,
+                            'error'
+                        )
+                    }
+                });
+            }
+        });
+    });
+});
+
+        // document.addEventListener('DOMContentLoaded', function () {
+
+
+        //     const imageContainer = document.getElementById('imageContainer');
+
+        //     imageContainer.addEventListener('click', function (event) {
+
+        //         console.log('button clicked;');
+        //         if (event.target.classList.contains('delete-image-btn')) {
+        //             event.preventDefault();
+        //             const imageElement = event.target.previousElementSibling;
+        //             const imageId = event.target.dataset.imageId;
+
+        //             imageElement.parentNode.removeChild(imageElement);
+
+        //             deleteImage(imageId);
+
+        //         }
+        //     });
+
+        //     function deleteImage(imageId) {
+        //         fetch('/admin/deleteimage', {
+        //             method: 'DELETE',
+        //             body: JSON.stringify({ imageId })
+        //         })
+        //             .then(response => {
+        //                 if (!response.ok) {
+        //                     throw new Error('Failed to delete image');
+        //                 }
+        //                 console.log('image deleted successfully');
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error deleting image:', error);
+        //             });
+        //     }
+
+        // })
+
+        function validateForm() {
+            const productname = document.getElementById('productname');
+            const description = document.getElementById('description');
+            const orginalprice = document.getElementById('orginalprice');
+            const offerprice = document.getElementById('offerprice');
+            const myCheckboxes = document.querySelectorAll('input[name="sizes[]"]:checked');
+            const stockInputs = document.querySelectorAll('input[name^="stockForSize"]');
+            const addImageName = document.getElementById('addImageName');
+            const categoryname = document.getElementById('categoryname');
+
+            const nameErrorMessage = document.getElementById('nameErrorMessage');
+            const descriptionErrorMessage = document.getElementById('descriptionErrorMessage');
+            const ogpriceErrorMessage = document.getElementById('ogpriceErrorMessage');
+            const ofpriceErrorMessage = document.getElementById('ofpriceErrorMessage');
+            const sizeErrorMessage = document.getElementById('sizeErrorMessage');
+            const reviewErrorMessage = document.getElementById('reviewErrorMessage');
+            const imageErrorMessage = document.getElementById('imageErrorMessage');
+            const CategoryErrorMessage = document.getElementById('CategoryErrorMessage');
+
+            var allowedExtensions = ["jpg", "jpeg", "png", "gif", "webp", "avif"];
+
+            // Validate form fields
+            if (productname.value.trim() === '' || description.value.trim() === '' || orginalprice.value.trim() === '' || offerprice.value.trim() === '' || myCheckboxes.length === 0 || !validateStockInputs(stockInputs, sizeErrorMessage) || addImageName.files.length === 0) {
+                // Display error messages
+                nameErrorMessage.innerHTML = 'Please enter a product name.';
+                descriptionErrorMessage.innerHTML = 'Please enter a description.';
+                ogpriceErrorMessage.innerHTML = 'Please enter the original price.';
+                ofpriceErrorMessage.innerHTML = 'Please enter the offer price.';
+                sizeErrorMessage.innerHTML = 'Please select at least one size and enter valid stock.';
+                reviewErrorMessage.innerHTML = 'Please enter a review.';
+                imageErrorMessage.innerHTML = 'Please add images.';
+                CategoryErrorMessage.innerHTML = 'Please enter a category name.';
+
+                setTimeout(() => {
+                    nameErrorMessage.innerHTML = '';
+                    descriptionErrorMessage.innerHTML = '';
+                    ogpriceErrorMessage.innerHTML = '';
+                    ofpriceErrorMessage.innerHTML = '';
+                    sizeErrorMessage.innerHTML = '';
+                    reviewErrorMessage.innerHTML = '';
+                    imageErrorMessage.innerHTML = '';
+                    CategoryErrorMessage.innerHTML = '';
+                }, 3000);
+
+                return false;
+            }
+
+            // Validate product name
+            if (!validateName(productname.value.trim())) {
+                nameErrorMessage.innerHTML = 'Please enter a valid product name.';
+                setTimeout(() => { nameErrorMessage.innerHTML = ''; }, 3000);
+                return false;
+            }
+
+            // Validate description
+            if (!validateDescription(description.value.trim())) {
+                descriptionErrorMessage.innerHTML = 'Please start the description with a capital letter.';
+                setTimeout(() => { descriptionErrorMessage.innerHTML = ''; }, 3000);
+                return false;
+            }
+
+            // Validate original price
+            if (!validatePrice(orginalprice.value.trim(), ogpriceErrorMessage)) {
+                return false;
+            }
+
+            // Validate offer price
+            if (!validatePrice(offerprice.value.trim(), ofpriceErrorMessage)) {
+                return false;
+            }
+
+            // Validate stock inputs
+            if (!validateStockInputs(stockInputs, sizeErrorMessage)) {
+                return false;
+            }
+
+            if (!validateSelectedSizes(myCheckboxes, sizeErrorMessage)) {
+                return false;
+            }
+
+            // Validate image files
+            if (!validateImages(addImageName, imageErrorMessage, allowedExtensions)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Validation functions
+        function validateName(productname) {
+            const nameRegex = /^[A-Z][a-zA-Z0-9 -]*$/;
+            return nameRegex.test(productname);
+        }
+
+        function validateDescription(description) {
+            const descRegex = /^[A-Z]/;
+            return descRegex.test(description);
+        }
+
+        function validatePrice(price, errorMessageElement) {
+            const priceRegex = /^\$?\d+(?:\.\d{1,2})?$/;
+            if (!priceRegex.test(price)) {
+                errorMessageElement.innerHTML = 'Please enter a valid price.';
+                setTimeout(() => { errorMessageElement.innerHTML = ''; }, 6000);
+                return false;
+            }
+            return true;
+        }
+
+        function validateStockInputs(stockInputs, errorMessageElement) {
+            let isValidStock = true;
+            stockInputs.forEach(stockInput => {
+                const associatedCheckboxId = stockInput.id.replace('stockForSize', '');
+                const associatedCheckbox = document.getElementById('myCheckbox' + associatedCheckboxId);
+                if (!validateStock(stockInput.value.trim())) {
+                    errorMessageElement.innerHTML = 'Please enter valid stock for selected sizes.';
+                    setTimeout(() => { errorMessageElement.innerHTML = ''; }, 3000);
+                    isValidStock = false;
+                } else if (associatedCheckbox.checked && parseInt(stockInput.value.trim()) <= 0) {
+                    errorMessageElement.innerHTML = 'Please enter valid stock greater than 0 for selected sizes.';
+                    setTimeout(() => { errorMessageElement.innerHTML = ''; }, 3000);
+                    isValidStock = false;
+                }
+            });
+            return isValidStock;
+        }
+
+        function validateSelectedSizes(myCheckboxes, errorMessageElement) {
+            if (myCheckboxes.length === 0) {
+                errorMessageElement.innerHTML = 'Please select at least one size.';
+                setTimeout(() => { errorMessageElement.innerHTML = ''; }, 3000);
+                return false;
+            }
+            return true;
+        }
+
+        function validateStock(stockvalue) {
+            const stockRegex = /^[0-9]+$/;
+            return stockRegex.test(stockvalue);
+        }
+
+        function validateImages(addImageName, errorMessageElement, allowedExtensions) {
+            for (var i = 0; i < addImageName.files.length; i++) {
+                var fileName = addImageName.files[i].name;
+                var fileExtension = fileName.split(".").pop().toLowerCase();
+
+                if (!allowedExtensions.includes(fileExtension)) {
+                    errorMessageElement.innerHTML = 'Please select only image files (jpg, jpeg, png, webp, avif).';
+                    setTimeout(() => { errorMessageElement.innerHTML = ''; }, 3000);
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+
+    <%- include('./adminLayouts/footer') %>

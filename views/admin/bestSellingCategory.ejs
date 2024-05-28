@@ -1,0 +1,29 @@
+<%- include('./adminLayouts/header') %>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Best Selling Categories</h1>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Category Name</th>
+                            <th>Total Quantity Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% categories.forEach((category, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= category.categoryName %></td>
+                                <td><%= category.totalQuantity %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<%- include('./adminLayouts/footer') %>

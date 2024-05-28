@@ -1,0 +1,485 @@
+<%- include('./adminLayouts/header') %>
+
+<!-- <title>Order Details</title>
+
+<body>
+    <div class="OrderContainer mt-3">
+      <div class="heading-box">
+        <h1>Order Details</h1>
+        <h2>Order ID: <%= order._id %></h2>
+        <h3>Username: <%= order.username %></h3>
+      </div>
+        <% if (order) { %>
+            <% order.items.forEach(item => { %>
+                <div class="OrderCard">
+                    <div class="orderCard-body">
+                        
+
+                        <div class="row mb-2">
+                            <div class="col-md-4">
+                                <img src="product-images/<%= item.productPicture[0].filename %>" alt="<%= item.productName %>"
+                                    class="productImg">
+                            </div>
+                            <div class="col-md-8">
+                                <h3>Ordered Product: <%= item.productName %></h3>
+                                <p>Quantity: <%= item.quantity %></p>
+                                <p>Size: <%= item.size %></p>
+                                <p>Price: $<%= item.price %></p>
+                                <p>Payment Method: <%= item.ItemPaymentStatus %></p>
+                                <p>Payment Status: <%= item.ItemPaymentStatus %></p>
+                                <p>Order Status: <span id="productStatus"><%= item.ItemStatus %></span></p>
+                                <% if (order.items.length > 1 && item.ItemStatus !== 'cancelled') { %>
+                                    <button class="Cancelbtn btn-sm btn-danger"
+                                        onclick="cancelProduct('<%= order._id %>','<%= item._id %>')">Cancel Order</button>
+                                <% } %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <% }) %>
+
+            <div class="AddressCard">
+                <h3>Total: $<%= order.total %></h3>
+                <h3>Address:</h3>
+                <p>House Name: <%= order.address.HouseName %></p>
+                <p>Street: <%= order.address.Street %></p>
+                <p>City: <%= order.address.City %></p>
+                <p>State: <%= order.address.state %></p>
+                <p>Pin Code: <%= order.address.pinCode %></p>
+                <h4>Payment Status: <%= order.PaymentStatus %></h4>
+                <h4>Payment Method: <%= order.paymentMethod %></h4>
+                <h4>Order Status: <span id="orderStatus"><%= order.status %></span></h4>
+                <h4>Ordered on: <%= order.date.toLocaleDateString('en-US') %></h4>
+                <% if (order.status !== 'cancelled') { %>
+                    <button class="Cancelbtn btn-sm btn-danger"
+                        onclick="cancelfullOrder('<%= order._id %>')">Cancel Order</button>
+                <% } %>
+            </div>
+
+        <% } else { %>
+            <div class="alert alert-danger" role="alert">
+                No Orders Found.
+            </div>
+        <% } %>
+    </div>
+</body> -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
+        crossorigin="anonymous"></script>
+      </body> -->
+
+              <section class="content-main">
+                  <div class="content-header">
+                      <div>
+                          <h2 class="content-title card-title">Order detail</h2>
+                          <p>Details for Order ID: <%= order._id %></p>
+                      </div>
+                  </div>
+                  <div class="card">
+                      <header class="card-header">
+                          <div class="row align-items-center">
+                              <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                                  <span>
+                                      <i class="material-icons md-calendar_today"></i> <b><%= order.date.toLocaleDateString('en-US') %></b>
+                                  </span> <br>
+                                  <small class="text-muted">Order ID: <%= order._id %></small>
+                              </div>
+                              
+                          </div>
+                      </header> <!-- card-header end// -->
+                      <div class="card-body">
+                          <div class="row mb-50 mt-20 order-info-wrap">
+                              <div class="col-md-4">
+                                  <article class="icontext align-items-start">
+                                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                                          <i class="text-primary material-icons md-person"></i>
+                                      </span>
+                                      <div class="text">
+                                          <h6 class="mb-1">Customer</h6>
+                                          <p class="mb-1">
+                                            <%= order.username %> <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template> 
+                                          </p>
+                                          <a href="#">View profile</a>
+                                      </div>
+                                  </article>
+                              </div> <!-- col// -->
+                              <div class="col-md-4">
+                                  <article class="icontext align-items-start">
+                                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                                          <i class="text-primary material-icons md-local_shipping"></i>
+                                      </span>
+                                      <div class="text">
+                                          <h6 class="mb-1">Order info</h6>
+                                          <p class="mb-1">
+                                              Shipping: Fargo express <br> Pay method:<%= order.paymentMethod %> <br> Status: <%= order.status %>
+                                          </p>
+                                          <a href="#">Download info</a>
+                                      </div>
+                                  </article>
+                              </div> <!-- col// -->
+                              <div class="col-md-4">
+                                  <article class="icontext align-items-start">
+                                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                                          <i class="text-primary material-icons md-place"></i>
+                                      </span>
+                                      <div class="text">
+                                          <h6 class="mb-1">Deliver to</h6>
+                                          <p class="mb-1">
+                                            <%= order.address.HouseName %><br> <%= order.address.Street %>,<%= order.address.City %> <br><%= order.address.state %> <br> <%= order.address.pinCode %>
+                                          </p>
+                                          <a href="#">View profile</a>
+                                      </div>
+                                  </article>
+                              </div> <!-- col// -->
+                          </div> <!-- row // -->
+                          <div class="row">
+                              <div class="col-lg-7">
+                                  <div class="table-responsive">
+                                      <table class="table">
+                                          <thead>
+                                              <tr>
+                                                  <th width="40%">Product</th>
+                                                  <th width="20%">Unit Price</th>
+                                                  <th width="20%">Quantity</th>
+                                                  <th width="20%" class="text-end">Status</th>
+                                                  <% if(order.items.length > 1) { %>
+                                                    <th width="20%" class="text-end">Cancel Product</th>
+                                                    <th width="20%" class="text-end">Change Status</th>
+                                                <% } %>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <% if(order) { %>
+                                                <% order.items.forEach(item => { %>
+                                                    <tr>
+                                                        <td>
+                                                            <a class="itemside" href="#">
+                                                                <div class="left">
+                                                                    <img src="/product-images/<%= item.productPicture%>" width="40" height="40" class="img-xs" alt="Item">
+                                                                </div>
+                                                                <div class="info"> <%= item.productName %>,<%= item.size %> size </div>
+                                                            </a>
+                                                        </td>
+                                                        <td> <%= item.price %> </td>
+                                                        <td>  <%= item.quantity %> </td>
+                                                        <td class="text-end" id="productStatus"> <%= item.ItemStatus %> </td>
+                                                        
+                                                        <% if (order.items.length > 1 && item.ItemStatus !== 'cancelled' && item.ItemStatus !=="delivered") { %>
+                                                            <td class="text-end">
+                                                                <button class="Cancelbtn btn-sm btn-danger" onclick="cancelProduct('<%= order._id %>','<%= item._id %>')">Cancel</button>
+
+                                                            </td>
+                                                            <td>
+                                                            <% if(item.ItemStatus !== 'cancelled' && item.ItemStatus !== 'delivered') { %>
+                                                                <button class="Status btn-sm btn-warning"
+                                                                    onclick="ChangeProductstatus('<%= order._id %>','<%= item._id %>')">Change Status</button>
+                                                                    <% } %>
+                                                                </td>
+                                                        <% } else { %>
+                                                            <td class="text-end"></td>
+                                                        <% } %>
+                                                        
+                                                    </tr>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <div class="alert alert-danger" role="alert">
+                                                    No Orders Found.
+                                                </div>
+                                            <% } %>
+                                            
+                                              
+                                              <tr>
+                                                  <td colspan="4">
+                                                      <article class="float-end">
+                                                          <dl class="dlist">
+                                                              <dt>Subtotal:</dt>
+                                                              <dd><%= order.total %></dd>
+                                                          </dl>
+                                                          <dl class="dlist">
+                                                              <dt>Shipping cost:</dt>
+                                                              <dd>Free shipping</dd>
+                                                          </dl>
+                                                          <dl class="dlist">
+                                                              <dt>Grand total:</dt>
+                                                              <dd> <b class="h5"><%= order.total %></b> </dd>
+                                                          </dl>
+                                                          <dl class="dlist">
+                                                              <dt class="text-muted"  id="orderStatus"> Order Status:</dt>
+                                                              <dd>
+                                                                <span class="badge rounded-pill 
+                                                                <% if (order.status === 'pending') { %> alert-warning text-warning
+                                                                <% } else if (order.status === 'delivered') { %> alert-success text-success
+                                                                <% } else if (order.status === 'cancelled') { %> alert-danger text-danger
+                                                                <% } %>">
+                                                                 <%= order.status %>
+                                                            </span>
+                                                              </dd>
+                                                          </dl>
+                                                          <% if (order.status !== 'cancelled' && order.status !== 'delivered') { %>
+                                                            <button class="Cancelbtn btn-sm btn-danger"
+                                                                onclick="cancelfullOrder('<%= order._id %>')">Cancel Order</button>
+                                                        <% } %>
+                                                        <% if( order.status !== 'cancelled' && order.status !== 'delivered') { %>
+                                                            <button class="Status btn-sm btn-warning"
+                                                                onclick="ChangeOrderstatus('<%= order._id %>')">Change Status</button>
+                                                                <% } %>
+                                                      </article>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div> 
+                              <div class="col-lg-1"></div>
+                              <div class="col-lg-4">
+                                  <div class="box shadow-sm bg-light">
+                                      <h6 class="mb-15">Payment info</h6>
+                                      <p>
+                                          <img src="/admin-assets/imgs/card-brands/2.png" class="border" height="20"> <%= order.paymentMethod %> 
+                                         
+                                      </p>
+                                  </div>
+
+                                  <!-- <div class="h-25 pt-4">
+                                      <div class="mb-3">
+                                          <label>Notes</label>
+                                          <textarea class="form-control" name="notes" id="notes" placeholder="Type some note"></textarea>
+                                      </div>
+                                      <button class="btn btn-primary">Save note</button>
+                                  </div> -->
+                              </div> <!-- col// -->
+                          </div>
+                      </div> <!-- card-body end// -->
+                  </div> <!-- card end// -->
+              </section> <!-- content-main end// -->
+              
+              
+              
+              
+              
+    <script>
+
+function cancelProduct(orderId,productId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to cancel the order!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, cancel it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/cancelProduct/${orderId}/${productId}`, { method: 'PUT' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                const productStatus = document.getElementById("productStatus");
+                                if (productStatus) {
+                                    productStatus.textContent = 'delivered';
+
+                                    Swal.fire({
+                                        title: "Status changed",
+                                        text: "The status has been changed.",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(()=>{
+                                        window.location.reload();
+                                    })
+
+                                } else {
+                                    console.error(`Element with ID 'productStatus' not found.`);
+                                }
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: data.message || "Something went wrong",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Failed to change status",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            });
+        }
+
+
+        function cancelfullOrder(orderId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to cancel the order!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, cancel it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/cancelfullOrder/${orderId}`, { method: 'PUT' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                const orderStatus = document.getElementById("orderStatus");
+                                if (orderStatus) {
+                                    orderStatus.textContent = 'cancelled';
+
+                                    Swal.fire({
+                                        title: "Cancelled",
+                                        text: "The order has been cancelled.",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(()=>{
+                                        window.location.reload();
+                                    })
+                                } else {
+                                    console.error(`Element with ID 'orderStatus' not found.`);
+                                }
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: data.message || "Something went wrong",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Failed to cancel order",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            });
+        }
+
+        function ChangeOrderstatus(orderId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to change the status of the order!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, change it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/ChangeOrderStatus/${orderId}`, { method: 'PUT' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                const orderStatus = document.getElementById("orderStatus");
+                                if (orderStatus) {
+                                    orderStatus.textContent = 'delivered';
+
+                                    Swal.fire({
+                                        title: "Delivered",
+                                        text: "The order has been delivered.",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(()=>{
+                                        window.location.reload();
+                                    })
+                                } else {
+                                    console.error(`Element with ID 'orderStatus' not found.`);
+                                }
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: data.message || "Something went wrong",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Failed to change status",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            });
+        }
+
+        function ChangeProductstatus(orderId,productId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to change the status!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, change it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/changeProductStatus/${orderId}/${productId}`, { method: 'PUT' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                const productStatus = document.getElementById("productStatus");
+                                if (productStatus) {
+                                    productStatus.textContent = 'delivered';
+
+                                    Swal.fire({
+                                        title: "Delivered",
+                                        text: "The order has been delivered.",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(()=>{
+                                        window.location.reload();
+                                    })
+
+                                } else {
+                                    console.error(`Element with ID 'productStatus' not found.`);
+                                }
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: data.message || "Something went wrong",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Failed to cancel order",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            });
+        }
+    </script>

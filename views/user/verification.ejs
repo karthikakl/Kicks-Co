@@ -1,0 +1,118 @@
+<%- include('./userLayout/header') %>
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html" rel="nofollow">Home</a>
+                    <span></span> Pages
+                    <span></span> Verification
+                </div>
+            </div>
+        </div>
+        <section class="pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div
+                                    class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                                    <div class="padding_eight_all bg-white">
+                                        <div class="heading_s1">
+                                            <h3 class="mb-30">Verification</h3>
+                                        </div>
+                                        <form method="post" action="/verify?email=<%= email %>" id="verifyForm">
+                                            <div class="form-group">
+                                                <input type="text" id="otp" name="otp" placeholder="Enter otp">
+                                                <input type="hidden" id="emailId" value="<%= email %>">
+                                                <h6 id="otpErrorMessages" style="color: red;"></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit"
+                                                    class="btn btn-fill-out btn-block hover-up">verify</button>
+                                            </div>
+                                            <div id="resendOtp">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+
+        const verifyForm = document.getElementById('verifyForm');
+        verifyForm.addEventListener('submit', validateverifyForm);
+
+
+        function validateverifyForm(event) {
+            event.preventDefault()
+
+
+            const otp = document.getElementById('otp')
+            const otpErrorMessages = document.getElementById('otpErrorMessages')
+
+            if (otp.value.trim() == '') {
+                otpErrorMessages.innerHTML = 'please enter Otp'
+                setTimeout(() => {
+                    otpErrorMessages.innerHTML = ''
+                }, 3000)
+                return false;
+            }
+
+            if (!validateOtp(otp.value.trim())) {
+                otpErrorMessages.innerHTML = 'please enter Valid Otp'
+                setTimeout(() => {
+                    otpErrorMessages.innerHTML = ''
+                }, 3000)
+                return false;
+            }
+
+            function validateOtp(otp) {
+                const otpRegex = /^[0-9]{4}$/;
+                return otpRegex.test(otp);
+            }
+
+            verifyForm.submit();
+
+        }
+
+        window.onload = function () {
+            startTimer();
+        };
+
+        function startTimer() {
+            let seconds = 2;
+            const resendOtp = document.getElementById('resendOtp')
+            const intervalId = setInterval(() => {
+                seconds -= 1;
+                resendOtp.innerHTML = `Resend otp in ${seconds} seconds.`
+
+                if (seconds === 0) {
+                    clearInterval(intervalId);
+
+                    resendOtp.innerHTML = '<button type="button" onclick="resendOtp()" class="btn btn-fill-out btn-block hover-up">Resend OTP</button>'
+
+                }
+            }, 1000)
+        }
+        function resendOtp() {
+            const email=document.getElementById('emailId').value;
+            fetch(`/resendOtp/${email}`, { method: "GET" })
+            .then(res=>{
+                if(res.ok){
+                    console.log("email send success");
+                }
+            })
+        }
+
+
+
+
+    </script>
+    <%- include('./userLayout/footer') %>

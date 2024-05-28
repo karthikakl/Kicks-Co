@@ -1,0 +1,76 @@
+<%- include('./adminLayouts/header') %>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+    <h2 class="mb-4">Edit Category</h2>
+    <div class="col-md-6">
+        <form method="post" action="/admin/categories/editCategory" id="categoryForm">
+            <div class="mb-4">
+                <label for="category_name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="categoryname" name="name" value="<%= category.name %>"/>
+                <input type="hidden" value="<%= category.id %>" name="id">
+                <h6 id="nameErrorMessage" style="color: red;"></h6>
+            </div>
+            
+            <!-- <div class="mb-4">
+                <label class="form-label">Parent</label>
+                <select class="form-select">
+                    <option>Casual Shoes</option>
+                    <option>Athlete</option>
+                </select>
+            </div> -->
+            <!-- <div class="mb-4">
+                <label class="form-label">Description</label>
+                 <textarea class="form-control" name="description"></textarea> -->
+            </div> 
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Update Category</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const categoryForm = document.getElementById('categoryForm')
+    categoryForm.addEventListener('submit',validateForm)
+
+    function validateForm(event){
+        event.preventDefault();
+
+        const name = document.getElementById('categoryname');
+        // const description = document.getElementById('description');
+
+        const nameErrorMessage = document.getElementById('nameErrorMessage');
+        // const descriptionMessage = document.getElementById('descriptionMessage');
+
+        if(categoryname.value.trim()==''){
+            nameErrorMessage.innerHTML= 'Please enter category name' 
+            // descriptionMessage.innerHTML='Please enter category description'
+            setTimeout(()=>{
+                nameErrorMessage.innerHTML=''
+            },3000)
+
+            return false;
+        }
+
+        if (!validateForm(categoryname.value.trim())) {
+            nameErrorMessage.innerHTML = 'Please enter a valid category name';
+                setTimeout(() => {
+                    nameErrorMessage.innerHTML = ''
+                }, 3000)
+                return false;
+            }
+
+            function validateForm(categoryname) {
+                const nameRegex = /^[A-Z]/;
+                return nameRegex.test(categoryname);
+            }
+
+            categoryForm.submit();
+        
+    }
+    
+
+
+</script>
+
+<%- include('./adminLayouts/footer') %>

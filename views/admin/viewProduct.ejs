@@ -1,0 +1,35 @@
+<!-- productDetails.ejs -->
+<%- include('./adminLayouts/header') %>
+
+<section class="content-main">
+    <div class="content-header">
+        <h2 class="content-title">Product Details</h2>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Display product details here -->
+            <h3><%= product.name %></h3>
+            <p><h5>Description:</h5> <%= product.description %></p>
+            <p><h5>Orginal Price:</h5> <%= product.orginalPrice %></p>
+            <p><h5>Offer Price:</h5> <%= product.offerPrice %></p>
+            <p><h5>Available sizes:</h5></p>
+            <ul>
+                <% product.sizes.forEach(size => { %>
+                 <li>
+                    Size: <%= size.size %> - Stock: <%= size.stock %>
+                 </li>
+                <% }) %>
+            </ul>
+            <p><h5>Brand:</h5> <%= product.brand %></p>
+            <p><h5>Category:</h5> <%= product.category %></p>
+        </div>
+        <h4>Product Images:</h4>
+<div class="product-images" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); grid-gap: 30px;">
+    <% product.image.forEach(image => { %>
+        <img src="/product-images/<%= image.filename%>" alt="<%= product.name %> Image" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+    <% }); %>
+</div>
+
+    </div>
+</section> 
+<%- include('./adminLayouts/footer') %>

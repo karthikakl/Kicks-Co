@@ -1,0 +1,1104 @@
+<%- include('./userLayout/header') %>
+
+<header class="header-area header-style-4 header-height-2">
+    <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info">
+                        <ul>
+                            <li><i class="fi-rs-smartphone"></i> <a href="#">(+01) - 2345 - 6789</a></li>
+                            <li><i class="fi-rs-marker"></i><a href="page-contact.html">Our location</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-4">
+                    <div class="text-center">
+                        <div id="news-flash" class="d-inline-block">
+                            <ul>
+                                <!-- <li> <a href="shop-grid-right.html">View details</a></li> -->
+                                <li>Where happy feet go shopping.</li>
+                                <li>Elevating your everyday.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info header-info-right">
+                        <ul>
+                            <li>
+                                <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i>
+                                    English <i class="fi-rs-angle-small-down"></i></a>
+                                <ul class="language-dropdown">
+                                    <li><a href="#"><img src="assets/imgs/theme/flag-fr.png" alt="">Français</a>
+                                    </li>
+                                    <li><a href="#"><img src="assets/imgs/theme/flag-dt.png" alt="">Deutsch</a>
+                                    </li>
+                                    <li><a href="#"><img src="assets/imgs/theme/flag-ru.png" alt="">Pусский</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <% if (user) { %>
+                                <li><i class="fi-rs-user"></i><a href="/logout">Logout</a></li>
+                                <% } else { %>
+                                    <li><i class="fi-rs-user"></i><a href="/login">Login</a></li>
+                                    <% } %>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="logo logo-width-1">
+                    <a href="index.html"><img src="/product-images/logo.png" alt="logo"></a>
+                </div>
+                <div class="header-right">
+                    <div class="search-style-2">
+                        
+                            
+                            <input type="text"  id="myInput" onkeyup="myFunction()" placeholder="Search for items..." >
+                            <button type="button" onclick="searchProducts()">Search</button>
+
+                        
+                    </div>
+                    <div class="header-action-right">
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                <a href="/wishlist">
+                                    <img class="svgInject" alt="Evara"
+                                        src="assets/imgs/theme/icons/icon-heart.svg">
+                                    <span class="pro-count blue"></span>
+                                </a>
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="/cart">
+                                    <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
+                                    <span class="pro-count blue" id="productCount"></span>
+                                </a>
+                                <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                    <ul>
+                                        <li>
+                                            <div class="shopping-cart-img">
+                                                <a href="shop-product-right.html"><img alt="Evara"
+                                                        src="assets/imgs/shop/thumbnail-3.jpg"></a>
+                                            </div>
+                                            <div class="shopping-cart-title">
+                                                <h4><a href="shop-product-right.html">Daisy Casual Bag</a></h4>
+                                                <h4><span>1 × </span>$800.00</h4>
+                                            </div>
+                                            <div class="shopping-cart-delete">
+                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="shopping-cart-img">
+                                                <a href="shop-product-right.html"><img alt="Evara"
+                                                        src="assets/imgs/shop/thumbnail-2.jpg"></a>
+                                            </div>
+                                            <div class="shopping-cart-title">
+                                                <h4><a href="shop-product-right.html">Corduroy Shirts</a></h4>
+                                                <h4><span>1 × </span>$3200.00</h4>
+                                            </div>
+                                            <div class="shopping-cart-delete">
+                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="shopping-cart-footer">
+                                        <div class="shopping-cart-total">
+                                            <h4>Total <span>$4000.00</span></h4>
+                                        </div>
+                                        <div class="shopping-cart-button">
+                                            <a href="shop-cart.html" class="outline">View cart</a>
+                                            <a href="shop-checkout.html">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom header-bottom-bg-color sticky-bar">
+        <div class="container">
+            <div class="header-wrap header-space-between position-relative">
+                <div class="logo logo-width-1 d-block d-lg-none">
+                    <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                </div>
+                <div class="header-nav d-none d-lg-flex">
+                    <div class="main-categori-wrap d-none d-lg-block">
+                        <a class="categori-button-active" href="#">
+                            <span class="fi-rs-apps"></span> Browse Categories
+                        </a>
+                        <div class="categori-dropdown-wrap categori-dropdown-active-large">
+                            <ul>
+                                <li class="has-children">
+                                    <a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's
+                                        Clothing</a>
+                                    <div class="dropdown-menu">
+                                        <ul class="mega-menu d-lg-flex">
+                                            <li class="mega-menu-col col-lg-7">
+                                                <ul class="d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Hot &
+                                                                    Trending</span></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Dresses</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Blouses & Shirts</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Hoodies & Sweatshirts</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Women's Sets</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Suits & Blazers</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Bodysuits</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Tanks & Camis</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Coats & Jackets</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Bottoms</span></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Leggings</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Skirts</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Shorts</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Jeans</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Pants & Capris</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Bikini Sets</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Cover-Ups</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Swimwear</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="mega-menu-col col-lg-5">
+                                                <div class="header-banner2">
+                                                    <img src="assets/imgs/banner/menu-banner-2.jpg"
+                                                        alt="menu_banner1">
+                                                    <div class="banne_info">
+                                                        <h6>10% Off</h6>
+                                                        <h4>New Arrival</h4>
+                                                        <a href="#">Shop now</a>
+                                                    </div>
+                                                </div>
+                                                <div class="header-banner2">
+                                                    <img src="assets/imgs/banner/menu-banner-3.jpg"
+                                                        alt="menu_banner2">
+                                                    <div class="banne_info">
+                                                        <h6>15% Off</h6>
+                                                        <h4>Hot Deals</h4>
+                                                        <a href="#">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="has-children">
+                                    <a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's
+                                        Clothing</a>
+                                    <div class="dropdown-menu">
+                                        <ul class="mega-menu d-lg-flex">
+                                            <li class="mega-menu-col col-lg-7">
+                                                <ul class="d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Jackets &
+                                                                    Coats</span></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Down Jackets</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Jackets</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Parkas</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Faux Leather Coats</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Trench</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Wool & Blends</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Vests & Waistcoats</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Leather Coats</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Suits &
+                                                                    Blazers</span></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Blazers</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Suit Jackets</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Suit Pants</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Suits</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Vests</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Tailor-made Suits</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Cover-Ups</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="mega-menu-col col-lg-5">
+                                                <div class="header-banner2">
+                                                    <img src="assets/imgs/banner/menu-banner-4.jpg"
+                                                        alt="menu_banner1">
+                                                    <div class="banne_info">
+                                                        <h6>10% Off</h6>
+                                                        <h4>New Arrival</h4>
+                                                        <a href="#">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="has-children">
+                                    <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i>
+                                        Cellphones</a>
+                                    <div class="dropdown-menu">
+                                        <ul class="mega-menu d-lg-flex">
+                                            <li class="mega-menu-col col-lg-7">
+                                                <ul class="d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Hot &
+                                                                    Trending</span></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Cellphones</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">iPhones</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Refurbished Phones</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Mobile Phone</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Mobile Phone Parts</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Phone Bags & Cases</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Communication Equipments</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Walkie Talkie</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            <li><span class="submenu-title">Accessories</span>
+                                                            </li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Screen Protectors</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Wire Chargers</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Wireless Chargers</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Car Chargers</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Power Bank</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Armbands</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Dust Plug</a></li>
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="#">Signal Boosters</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="mega-menu-col col-lg-5">
+                                                <div class="header-banner2">
+                                                    <img src="assets/imgs/banner/menu-banner-5.jpg"
+                                                        alt="menu_banner1">
+                                                    <div class="banne_info">
+                                                        <h6>10% Off</h6>
+                                                        <h4>New Arrival</h4>
+                                                        <a href="#">Shop now</a>
+                                                    </div>
+                                                </div>
+                                                <div class="header-banner2">
+                                                    <img src="assets/imgs/banner/menu-banner-6.jpg"
+                                                        alt="menu_banner2">
+                                                    <div class="banne_info">
+                                                        <h6>15% Off</h6>
+                                                        <h4>Hot Deals</h4>
+                                                        <a href="#">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
+                                        Office</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
+                                        Electronics</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-diamond"></i>Jewelry &
+                                        Accessories</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home &
+                                        Garden</a></li>
+                                <li><a href="shop-grid-right.html"><i
+                                            class="evara-font-high-heels"></i>Shoes</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
+                                        Kids</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor
+                                        fun</a></li>
+                                <li>
+                                    <ul class="more_slide_open" style="display: none;">
+                                        <li><a href="shop-grid-right.html"><i
+                                                    class="evara-font-desktop"></i>Beauty, Health</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Bags
+                                                and Shoes</a></li>
+                                        <li><a href="shop-grid-right.html"><i
+                                                    class="evara-font-diamond"></i>Consumer Electronics</a></li>
+                                        <li><a href="shop-grid-right.html"><i
+                                                    class="evara-font-home"></i>Automobiles & Motorcycles</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="more_categories">Show more...</div>
+                        </div>
+                    </div>
+                    <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                        <nav>
+                            <ul>
+                                <li><a  href="/" id="homeLink">Home <i
+                                            class="fi-rs-angle-down"></i></a>
+                                    <!-- <ul class="sub-menu">
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                </ul> -->
+                                </li>
+                                <li>
+                                    <a href="page-about.html" id="aboutLink">About</a>
+                                </li>
+                                
+                                <li><a href="/account" id="accountLink">My Account </a>
+                                    
+                                </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="header-action-right d-block d-lg-none">
+                    <div class="header-action-2">
+                        <div class="header-action-icon-2">
+                            <a href="/wishlist">
+                                <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
+                                <span class="pro-count white"></span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            <a class="mini-cart-icon" href="/cart">
+                                <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
+                                <span class="pro-count white"></span>
+                            </a>
+                            <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                <ul>
+                                    <li>
+                                        <div class="shopping-cart-img">
+                                            <a href="shop-product-right.html"><img alt="Evara"
+                                                    src="assets/imgs/shop/thumbnail-3.jpg"></a>
+                                        </div>
+                                        <div class="shopping-cart-title">
+                                            <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
+                                            <h3><span>1 × </span>$800.00</h3>
+                                        </div>
+                                        <div class="shopping-cart-delete">
+                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="shopping-cart-img">
+                                            <a href="shop-product-right.html"><img alt="Evara"
+                                                    src="assets/imgs/shop/thumbnail-4.jpg"></a>
+                                        </div>
+                                        <div class="shopping-cart-title">
+                                            <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
+                                            <h3><span>1 × </span>$3500.00</h3>
+                                        </div>
+                                        <div class="shopping-cart-delete">
+                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="shopping-cart-footer">
+                                    <div class="shopping-cart-total">
+                                        <h4>Total <span>$383.00</span></h4>
+                                    </div>
+                                    <div class="shopping-cart-button">
+                                        <a href="shop-cart.html">View cart</a>
+                                        <a href="shop-checkout.html">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-action-icon-2 d-block d-lg-none">
+                            <div class="burger-icon burger-icon-white">
+                                <span class="burger-icon-top"></span>
+                                <span class="burger-icon-mid"></span>
+                                <span class="burger-icon-bottom"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" rel="nofollow">Home</a>
+                <span></span> Your Account
+            </div>
+        </div>
+    </div>
+
+    <div class="CardContainer">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Dashboard Menu -->
+                <div class="dashboard-menu">
+                    <ul class="nav flex-column" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard-content"
+                                role="tab" aria-controls="dashboard-content" aria-selected="true">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders-content" role="tab"
+                                aria-controls="orders-content" aria-selected="false">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address-content" role="tab"
+                                aria-controls="address-content" aria-selected="false">Address</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders-content"
+                                role="tab" aria-controls="track-orders-content" aria-selected="false">Wallet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                
+                <div class="tab-content">
+                   
+                    <div class="tab-pane fade show active" id="dashboard-content" role="tabpanel"
+                        aria-labelledby="dashboard-tab">
+                        <div class="card user-details">
+                            <div class="card-body">
+                               
+                                <h5>Welcome, <%= users.name %>
+                                </h5>
+                                <p>Email: <%= users.email %>
+                                </p>
+                                <p>Phone Number: <%= users.number %>
+                                </p>
+                                <button class="btn" onclick="editProfile()">Edit Profile</button>
+<br>
+                        <form action="/editUser" method="post" id="editProfileForm" style="display: none;">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="<%= users.name%>" >
+                                <h6 id="nameErrorMessage" style="color: red;"></h6>
+                            </div>
+               <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" value="<%= users.email %>" >
+        <h6 id="emailErrorMessage" style="color: red;"></h6>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="<%= users.number %>">
+        <h6 id="numberErrorMessage" style="color: red;"></h6>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+                                <p>Change Password</p>
+                               
+                            </div>
+                            <form action="/changePassword" method="post" id="passwordValidation">
+                                <div class="mb-3 input-container">
+                                    <label for="currentPassword" class="form-label"  >Current Password:</label>
+                                    <input type="password" class="form-control" id="currentPassword"
+                                        name="currentPassword" >
+                                    <h6 id="passwordErrorMessage" style="color: red;"></h6>
+                                </div>
+                                <div class="mb-3 input-container">
+                                    <label for="newPassword" class="form-label">New Password:</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                        >
+                                    <h6 id="newErrorMessage" style="color: red;"></h6>
+                                </div>
+                                <div class="mb-3 input-container">
+                                    <label for="confirmPassword" class="form-label">Confirm New Password:</label>
+                                    <input type="password" class="form-control" id="confirmPassword"
+                                        name="confirmPassword" >
+                                    <h6 id="confirmErrorMessage" style="color: red;"></h6>
+                                </div>
+                                <div class="custom-button">
+                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Orders Content -->
+                    <div class="tab-pane fade" id="orders-content" role="tabpanel" aria-labelledby="orders-tab">
+                        
+                            <div class="card-header">
+                                <h5 class="mb">Your Orders</h5>
+                            </div>
+                            
+                                <tbody>
+                                    
+                                        
+                                            <table class="table" id="tableInput2">
+    <thead>
+        <tr>
+            <th width="20%">Order ID</th>
+            <th width="20%">Date</th>
+            <th width="20%">Total</th>
+            <th width="20%">Status</th>
+            <th width="20%" class="text-end">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (order && order.length > 0) { %>
+            <% order.sort((a,b)=> new Date(b.date)- new Date(a.date)) %>
+            <% order.forEach(order => { %>
+                <tr>
+                    <td><%= order._id %></td>
+                    <td><%= new Date(order.date).toLocaleDateString() %></td>
+                    <td><%= order.total %></td>
+                    <td>
+                        <span class="badge rounded-pill 
+                        <% if (order.status === 'pending') { %> alert-warning text-warning
+                        <% } else if (order.status === 'delivered') { %> alert-success text-success
+                        <% } else if (order.status === 'cancelled') { %> alert-danger text-danger
+                        <% } %>">
+                        <%= order.status %>
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <a href="/orderView/<%= order._id %>" class="btn btn-sm btn-primary">View Details</a>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="5" class="text-center">No Orders Found.</td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+                            
+                            <div class="pagination-area2"></div>
+                       
+                    </div>
+                    
+                   
+                    
+    
+                    
+                    
+
+                    
+                    <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Your Address</h5>
+                            </div>
+                        <div>
+                            <a href="/addAddress" class="btn btn-primary"><i
+                                    class="material-icons md-plus"></i> Add
+                                new address</a>
+                        </div>
+
+                        <%if(address) { %>
+                       
+                        <% address.forEach((address,index)=> { %>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Address <%=index+1 %></h5>
+                                    <p><strong>House Name:</strong>
+                                        <%= address.HouseName %>
+                                    </p>
+                                    <p><strong>Street:</strong>
+                                        <%= address.Street %>
+                                    </p>
+                                    <p><strong>City:</strong>
+                                        <%= address.City %>
+                                    </p>
+                                    <p><strong>State:</strong>
+                                        <%= address.state %>
+                                    </p>
+                                    <p><strong>Pincode:</strong>
+                                        <%= address.pinCode %>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href='/editaddress/<%= address._id %>' class="btn">Edit</a>
+                                        <a onclick="deleteAddress('<%= address._id  %>')" class="btn btn-danger">Delete</a>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                            <% }); %>
+                            <% } else { %>
+                               <div>
+                                <img src="/product-images/no address3.jpg" alt="noAddress" style="width: 300px; height: auto; display: block; margin: 0 auto;">
+                                </div>
+                                <div id="noProductsMessage"
+                                                                style="font-size: 18px; color: red; text-align: center;">
+                                                                No existing addresses!!</div>
+                           <% } %>
+                            </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="track-orders-content" role="tabpanel"
+                        aria-labelledby="track-orders-tab">
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                
+                               
+                                    <div class="mb-3">
+                                        <label for="order-id" class="form-label1"> Your Wallet</label>
+                                       <div class="balanceBox">
+                                        <p>Wallet Balance: <%= wallet.balance %></p>
+                                    </div>
+                                    <div class="headline1">
+                                                Transaction History:
+                                            </div>
+                                                <table class="table" id="tableInput">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Amount</th>
+                                                            <th>Reason</th>
+                                                            <th>Type</th>
+                                                            <th>Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <% wallet.transaction.sort((a,b)=> new Date(b.date)- new Date(a.date)) %>
+                                                        <tbody>
+                                                            
+                                                            <% wallet.transaction.forEach(transaction => { %>
+                                                                <tr>
+                                                                <td><%= transaction.amount %></td>
+                                                                <td><%= transaction.reason %></td>
+                                                                <td>
+                                                                <% if(transaction.transactionType === 'credit') { %>
+                                                                    <span class="badge rounded-pill bg-success"><%= transaction.transactionType %></span>
+                                                                <% } else {%>
+                                                                    <span class="badge rounded-pill bg-danger"><%= transaction.transactionType %></span>
+                                                               <% } %>
+                                                            </td>
+                                                                <td> <%= new Date(transaction.date).toLocaleDateString('en-US') %></td>
+                                                                </tr>
+                                                        <% }) %>
+                                                            </tbody>
+                                                    </table>
+                                    </div>                            
+                            </div>
+                            <div class="pagination-area"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+           
+            const itemsPerPage = 5;
+            let currentPage = 0;
+            const items = Array.from(document.getElementById('tableInput').getElementsByTagName('tr')).slice(1);
+
+
+            function showPage(page) {
+                const startIndex = page * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+                items.forEach((item, index) => {
+                    item.style.display = (index >= startIndex && index < endIndex) ? 'table-row' : 'none';
+            });
+               
+
+                updateActiveButtonStates();
+            }
+            function createPageButtons() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                const paginationContainer = document.createElement('div');
+                // const paginationDiv = document.body.appendChild(paginationContainer);
+                paginationContainer.classList.add('pagination');
+
+                for (let i = 0; i < totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i + 1;
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        showPage(currentPage);
+                       
+                    });
+
+
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                document.querySelector('.pagination-area').appendChild(paginationContainer);
+
+            }
+            function updateActiveButtonStates() {
+                const pageButtons = document.querySelectorAll('.pagination button');
+                pageButtons.forEach((button, index) => {
+                    if (index === currentPage) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+
+            createPageButtons();
+            showPage(currentPage);
+
+        })
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+           
+            const itemsPerPage = 8;
+            let currentPage = 0;
+            const items = Array.from(document.getElementById('tableInput2').getElementsByTagName('tr')).slice(1);
+
+
+            function showPage(page) {
+                const startIndex = page * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+                items.forEach((item, index) => {
+                    item.style.display = (index >= startIndex && index < endIndex) ? 'table-row' : 'none';
+            });
+               
+
+                updateActiveButtonStates();
+            }
+            function createPageButtons() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                const paginationContainer = document.createElement('div');
+                // const paginationDiv = document.body.appendChild(paginationContainer);
+                paginationContainer.classList.add('pagination');
+
+                for (let i = 0; i < totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i + 1;
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        showPage(currentPage);
+                       
+                    });
+
+
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                document.querySelector('.pagination-area2').appendChild(paginationContainer);
+
+            }
+            function updateActiveButtonStates() {
+                const pageButtons = document.querySelectorAll('.pagination button');
+                pageButtons.forEach((button, index) => {
+                    if (index === currentPage) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+
+            createPageButtons();
+            showPage(currentPage);
+
+        })
+    </script>
+    <style>
+        .pagination-area {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 2px 5px;
+            background-color:#484f4f;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #0000003a;
+        }
+    </style>
+
+    <script>
+        
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+
+
+  
+
+    
+
+   
+
+            
+        <script>
+
+            
+
+        function validateForm() {
+            
+            
+
+            document.getElementById("passwordErrorMessage").textContent = "";
+            document.getElementById("newErrorMessage").textContent = "";
+            document.getElementById("confirmErrorMessage").textContent = "";
+        
+           
+
+            if (document.getElementById("currentPassword").value.trim() === "") {
+        document.getElementById("passwordErrorMessage").textContent = "Please enter your current password";
+        return false;
+    }
+       
+
+    const newPassword = document.getElementById("newPassword").value.trim();
+    if (newPassword === "") {
+        document.getElementById("newErrorMessage").textContent = "Please enter a new password";
+        return false;
+    }
+        
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    if (!passwordRegex.test(newPassword)) {
+        document.getElementById("newErrorMessage").textContent = "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one digit";
+        return false;
+    }
+
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    if (confirmPassword === "") {
+        document.getElementById("confirmErrorMessage").textContent = "Please confirm your new password";
+        return false;
+    }
+
+    if (newPassword !== confirmPassword) {
+        document.getElementById("confirmErrorMessage").textContent = "Passwords do not match";
+        return false;
+    }
+        
+            return true; 
+        }
+        </script>
+
+        <script>
+            document.getElementById('passwordValidation').addEventListener('submit', validateForm);
+
+            function validateForm(event) {
+                event.preventDefault();
+
+                const currentPassword = document.getElementById('currentPassword');
+                const newPassword = document.getElementById('newPassword').value.trim();
+                const confirmPassword = document.getElementById('confirmPassword');
+
+                const passwordErrorMessage = document.getElementById('passwordErrorMessage');
+                const newErrorMessage = document.getElementById('newErrorMessage');
+                const confirmErrorMessage = document.getElementById('confirmErrorMessage');
+
+                
+                        passwordErrorMessage.innerHTML = '';
+                        newErrorMessage.innerHTML = '';
+                        confirmErrorMessage.innerHTML = '';
+
+        if (document.getElementById("currentPassword").value.trim() === "") {
+        document.getElementById("passwordErrorMessage").textContent = "Please enter your current password";
+        return false;
+        }
+
+    
+    if (newPassword === "") {
+        document.getElementById("newErrorMessage").textContent = "Please enter a new password";
+        return false;
+    }
+                   
+                
+
+            
+            passwordValidation.submit();
+        }
+        
+
+
+     </script>
+
+     
+
+  
+    
+
+   
+    <script>
+
+    function deleteAddress(addressId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete this address!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/deleteAddress/${addressId}`, { method: 'GET' })
+                    .then(res => {
+                        if (res.ok) {
+                            Swal.fire({
+                                title: "Deleted",
+                                text: "The Address has been deleted.",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                location.reload()
+                            }, 2000)
+                        } else {
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Something went wrong",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Cancelled",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+</script>
+
+
+<script>
+   
+    function editProfile() {
+       
+        const editProfileForm = document.getElementById('editProfileForm');
+        if (editProfileForm.style.display === 'none') {
+            editProfileForm.style.display = 'block';
+        } else {
+            editProfileForm.style.display = 'none';
+        }
+    }
+  
+    document.getElementById('editProfileForm').addEventListener('submit',validateEdit);
+
+    function validateEdit(event){
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const number = document.getElementById('phoneNumber').value;
+
+        const nameErrorMessage = document.getElementById('nameErrorMessage');
+        const emailErrorMessage = document.getElementById('emailErrorMessage');
+        const numberErrorMessage = document.getElementById('numberErrorMessage');
+
+        nameErrorMessage.innerHTML ='';
+        emailErrorMessage.innerHTML = '';
+        numberErrorMessage.innerHTML ='';
+
+        if (name.trim() === '') {
+        nameErrorMessage.innerHTML = 'Please enter your name.';
+        return false;
+    }
+
+    if (email.trim() === '') {
+        emailErrorMessage.innerHTML = 'Please enter your mail.';
+        return false;
+    }
+
+    if (number.trim() === '') { 
+        numberErrorMessage.innerHTML = 'Please enter your number.';
+        return false;
+    }
+    editProfileForm.submit();
+    }
+    
+
+</script>
+
+
+<script>
+    const currentUrl = window.location.pathname;
+
+    const homeLink = document.getElementById('homeLink');
+    const aboutLink = document.getElementById('aboutLink');
+    const accountLink = document.getElementById('accountLink');
+
+    if(currentUrl ==='/'){
+        homeLink.classList.add('active')
+    } else if (currentUrl ==='/about'){
+        aboutLink.classList.add('active')
+    } else if (currentUrl ==='/account'){
+    accountLink.classList.add('active')
+    }
+    </script>
+
+    
+<%- include('./userLayout/footer') %>
