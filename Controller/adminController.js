@@ -1,12 +1,13 @@
 const User = require("../Model/userModel");
 const Order = require("../Model/orderModel");
 const Product = require('../Model/productModel');
-const Category = require('../Model/CategoryModel')
+const Category = require('../Model/categoryModel')
 
 //login
 
 const adminLogin = async (req, res) => {
     try {
+        console.log('page is loding..');
         return res.status(200).render('adminLogin')
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal server error" })

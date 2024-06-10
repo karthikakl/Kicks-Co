@@ -1,5 +1,5 @@
 const Products = require('../Model/productModel');
-const Category = require('../Model/CategoryModel');
+const Category = require('../Model/categoryModel');
 const Offers = require('../Model/offerModel');
 const Coupon = require('../Model/couponModel');
 // const { default: products } = require('razorpay/dist/types/products');

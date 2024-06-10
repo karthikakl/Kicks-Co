@@ -18,11 +18,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="/admin-assets/imgs/theme/favicon.svg">
     <!-- Template CSS -->
     <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
-   
+ 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
    
@@ -112,21 +111,21 @@
             </ul>
             <hr>
             <ul class="menu-aside">
-                <li class="menu-item has-submenu">
+                <li class="menu-item has-submenu" id="best">
                     <a class="menu-link" href="#"> <i class="icon material-icons md-local_offer"></i>
                         <span class="text">Best Selling</span>
                     </a>
-                    <div class="submenu">
-                        <a href="/admin/bestSellingProduct">Product</a>
-                        <a href='/admin/bestSellingCategory'>Category</a>
-                        <a href="/admin/bestSellingBrand">Brand</a>
+                    <div class="submenu" >
+                        <a id="bestSelling" href="/admin/bestSellingProduct">Product</a>
+                        <a id="bestSellingCategory" href='/admin/bestSellingCategory'>Category</a>
+                        <a id="bestSellingBrand" href="/admin/bestSellingBrand">Brand</a>
                     </div>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
                         <span class="text"> Starter page </span>
                     </a>
-                </li>
+                </li> -->
             </ul>
             <br>
             <br>
@@ -215,7 +214,7 @@
             const coupons = document.getElementById('coupons');
             const offers = document.getElementById('offers');
             const returns = document.getElementById('return');
-           
+           const bestSelling = document.getElementById('bestSelling')
             
             if(currentUrl ==='/admin/adminHome'){
                 dashboard.classList.add('active')
@@ -233,5 +232,13 @@
                 offers.classList.add('active')
             }else if(currentUrl ==='/admin/returnList'){
                 returns.classList.add('active')
+            }else if(currentUrl ==='/admin/bestSellingProduct'){
+                bestSelling.classList.add('active')
+            
+            }else if(currentUrl ==='/admin/bestSellingCategory'){
+            bestSellingCategory.classList.add('active')
+            }
+            else if(currentUrl ==='/admin/bestSellingBrand'){
+            bestSellingBrand.classList.add('active')
             }
             </script>

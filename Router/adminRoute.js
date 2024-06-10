@@ -8,7 +8,7 @@ const {isAdmin,isLoggedAdmin} = require("../Middleware/adminAuth")
 
 admin_route.set('views','./views/admin')
 
-admin_route.get('/login', isAdmin,adminController.adminLogin);
+admin_route.get('/login',isAdmin,adminController.adminLogin);
 admin_route.post('/adminVerify',isAdmin,adminController.adminVerify);
 admin_route.get('/adminHome',isLoggedAdmin, adminController.adminHome);
 admin_route.get('/adminLogout',isLoggedAdmin,adminController.adminLogout);

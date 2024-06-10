@@ -1,5 +1,5 @@
 const Product = require('../Model/productModel')
-const Category = require('../Model/CategoryModel');
+const Category = require('../Model/categoryModel');
 const { deleteImage } = require('../config/multer');
 const User = require("../Model/userModel");
 const Offer = require("../Model/offerModel");
