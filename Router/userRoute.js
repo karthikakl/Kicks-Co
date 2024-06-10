@@ -16,7 +16,7 @@ user_route.use(session({
 user_route.set('views','./views/user');
 
 
-user_route.get('/',isUser,userController.homePage);
+user_route.get('/',userController.homePage);
 user_route.get('/login',isLoggeduser,userController.userLogin)
 user_route.post('/home',isLoggeduser,userController.verifyLogin)
 user_route.get('/signup',isLoggeduser,userController.userSignup);
