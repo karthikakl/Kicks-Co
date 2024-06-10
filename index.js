@@ -14,7 +14,7 @@ const orderRouter = require('./Router/orderRoute');
 
 const nocache  = require('nocache')
 const mongoose = require('mongoose')
-mongoose.connect ("mongodb://127.0.0.1:27017/ecommerce_management_system");
+mongoose.connect (process.env.MONGODB);
  
 app.use(express.static(path.join(__dirname,'public')));  ///route
 
@@ -54,3 +54,4 @@ app.use((req,res,next)=>{
 
 app.listen(5000);
 console.log('server running on http://localhost:5000')
+""
