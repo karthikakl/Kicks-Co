@@ -1,7 +1,7 @@
-const Address = require('../model/addressModel');
-const User = require("../model/userModel");
-const Order = require("../model/orderModel");
-const Wallet = require("../model/walletModel");
+const Address = require('../Model/addressModel');
+const User = require("../Model/userModel");
+const Order = require("../Model/orderModel");
+const Wallet = require("../Model/walletModel");
 
 const userAccount = async (req, res) => {   //address
     try {

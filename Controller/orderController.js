@@ -1,12 +1,12 @@
-const Address = require('../model/addressModel');
-const User = require('../model/userModel');
-const Product = require('../model/productModel');
-const Order = require('../model/orderModel')
-const Cart = require('../model/cartModel');
+const Address = require('../Model/addressModel');
+const User = require('../Model/userModel');
+const Product = require('../Model/productModel');
+const Order = require('../Model/orderModel')
+const Cart = require('../Model/cartModel');
 const Razorpay = require('razorpay');
-const Return = require('../model/returnModel');
-const Wallet = require('../model/walletModel');
-const Coupon = require('../model/couponModel');
+const Return = require('../Model/returnModel');
+const Wallet = require('../Model/walletModel');
+const Coupon = require('../Model/couponModel');
 const easyInvoice = require('easyinvoice');
 
 
