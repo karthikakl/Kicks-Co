@@ -698,7 +698,7 @@
                                     <div class="mb-3">
                                         <label for="order-id" class="form-label1"> Your Wallet</label>
                                        <div class="balanceBox">
-                                        <p>Wallet Balance: <%= wallet.balance %></p>
+                                        <p>Wallet Balance:<%= wallet ? wallet.balance : 0 %></p>
                                     </div>
                                     <div class="headline1">
                                                 Transaction History:
@@ -712,10 +712,13 @@
                                                             <th>Date</th>
                                                             </tr>
                                                         </thead>
-                                                        <% wallet.transaction.sort((a,b)=> new Date(b.date)- new Date(a.date)) %>
+                                                        <% 
+                                                        const transactions = wallet && wallet.transaction ? wallet.transaction : [];
+                                                        transactions.sort((a, b) => new Date(b.date) - new Date(a.date)); 
+                                                        %>
                                                         <tbody>
-                                                            
-                                                            <% wallet.transaction.forEach(transaction => { %>
+                                                            <% if(transactions > 0) { %>
+                                                            <% transactions.forEach(transaction => { %>
                                                                 <tr>
                                                                 <td><%= transaction.amount %></td>
                                                                 <td><%= transaction.reason %></td>
@@ -729,6 +732,13 @@
                                                                 <td> <%= new Date(transaction.date).toLocaleDateString('en-US') %></td>
                                                                 </tr>
                                                         <% }) %>
+                                                        <% } else { %>
+                                                            <tr>
+                                                                <td colspan="6"
+                                                    style="font-size: 18px; color: red; text-align: center;">No transactions 
+                                                    yet!!.</td>
+                                                            </tr>
+                                                            <% } %>
                                                             </tbody>
                                                     </table>
                                     </div>                            

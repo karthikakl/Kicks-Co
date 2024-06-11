@@ -110,7 +110,7 @@ if(!address){
     return res.status(404).json({success:false,message:'address not found'})
 }
 const addressData = address.address.find(addr => addr._id.toString()=== addressId)
-        res.render('editAddress',{address: addressData })
+        res.render('editAddress',{address: addressData ,user})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ Success: false, message: "Internal Server error" }) 
