@@ -1,7 +1,7 @@
-const Products = require('../Model/productModel');
-const Category = require('../Model/categoryModel');
-const Offers = require('../Model/offerModel');
-const Coupon = require('../Model/couponModel');
+const Products = require('../model/productModel');
+const Category = require('../model/categoryModel');
+const Offers = require('../model/offerModel');
+const Coupon = require('../model/couponModel');
 // const { default: products } = require('razorpay/dist/types/products');
 
 const offerList = async(req,res)=>{

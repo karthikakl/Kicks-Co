@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const User = require('../Model/userModel');
+const User = require('./userModel');
 
 const addressSchema = new mongoose.Schema({
     HouseName:{

@@ -1,14 +1,14 @@
-const User = require("../Model/userModel")
-const Category = require("../Model/categoryModel")
-const Product = require("../Model/productModel")
+const User = require("../model/userModel")
+const Category = require('../model/categoryModel')
+const Product = require('../model/productModel')
 const bcrypt = require('bcryptjs')
 const sendVerifyMail = require('../config/mailSender');
 const otpGenerator = require('../config/otp');
 const otp = require('otp-generator');
-const Otp = require('../Model/otpModel');
-const Cart = require('../Model/cartModel');
-const Wallet = require('../Model/walletModel');
-const Order = require('../Model/orderModel');
+const Otp = require('../model/otpModel');
+const Cart = require('../model/cartModel');
+const Wallet = require('../model/walletModel');
+const Order = require('../model/orderModel');
 
 
 

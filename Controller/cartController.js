@@ -1,6 +1,6 @@
-const Cart = require('../Model/cartModel')
-const User = require('../Model/userModel')
-const Product = require('../Model/productModel');
+const Cart = require('../model/cartModel')
+const User = require('../model/userModel')
+const Product = require('../model/productModel');
 // const { userLogout } = require('./userController');
 
 

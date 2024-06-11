@@ -1,8 +1,8 @@
-const Product = require('../Model/productModel')
-const Category = require('../Model/categoryModel');
+const Product = require('../model/productModel')
+const Category = require('../model/categoryModel');
 const { deleteImage } = require('../config/multer');
-const User = require("../Model/userModel");
-const Offer = require("../Model/offerModel");
+const User = require("../model/userModel");
+const Offer = require("../model/offerModel");
 
 
 const products = async (req, res) => {

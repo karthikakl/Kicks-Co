@@ -1,9 +1,9 @@
-const Coupon = require('../Model/couponModel');
-const Category = require('../Model/categoryModel');
-const Product = require('../Model/productModel');
-const orderModel = require('../Model/orderModel');
-const Cart = require('../Model/cartModel');
-const User = require('../Model/userModel');
+const Coupon = require('../model/couponModel');
+const Category = require('../model/categoryModel');
+const Product = require('../model/productModel');
+const orderModel = require('../model/orderModel');
+const Cart = require('../model/cartModel');
+const User = require('../model/userModel');
 
 const couponList = async(req,res)=>{
     try {

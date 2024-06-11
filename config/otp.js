@@ -1,5 +1,5 @@
 const otp = require('otp-generator');
-const Otp = require("../Model/otpModel")
+const Otp = require("../model/otpModel")
 
 const generateOtp =async(email)=>{
     try{

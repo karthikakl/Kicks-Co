@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Address = require('../Model/addressModel');
-const User = require('../Model/userModel');
-const Product = require('../Model/productModel')
+const Address = require('./addressModel');
+const User = require('./userModel');
+const Product = require('./productModel')
 const orderitemSchema = new mongoose.Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
