@@ -1,5 +1,5 @@
 const Coupon = require('../Model/couponModel');
-const Category = require('../Model/categoryModel');
+const Category = require('../Model/CategoryModel');
 const Product = require('../Model/productModel');
 const orderModel = require('../Model/orderModel');
 const Cart = require('../Model/cartModel');

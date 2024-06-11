@@ -1,5 +1,5 @@
 const User = require('../Model/userModel')
-const Category = require('../Model/categoryModel')
+const Category = require('../Model/CategoryModel')
 const Product = require('../Model/productModel')
 const bcrypt = require('bcryptjs')
 const sendVerifyMail = require('../config/mailSender');
