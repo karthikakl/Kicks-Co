@@ -29,7 +29,6 @@ Developed a comprehensive e-commerce application using the MERN stack's backend 
 ![React](https://img.shields.io/badge/React-17.x-blue)
 ![CSS](https://img.shields.io/badge/CSS-3-blue)
 ![HTML](https://img.shields.io/badge/HTML-5-orange)
-![JWT](https://img.shields.io/badge/JWT-JSON_Web_Token-blue)
 ![Multer](https://img.shields.io/badge/Multer-1.4.2-yellowgreen)
 ![Razorpay](https://img.shields.io/badge/Razorpay-Payment_Gateway-blue)
 ![Nodemailer](https://img.shields.io/badge/Nodemailer-Email_Utility-blue)
