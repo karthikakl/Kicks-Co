@@ -18,7 +18,6 @@ Developed a comprehensive e-commerce application using the MERN stack's backend 
 ## Technologies Used
 - **Backend**: MongoDB, Node.js, Express.js
 - **Frontend**: HTML, CSS, EJS
-- **Authentication**: JWT
 - **File Uploads**: Multer
 - **Payment Integration**: Razorpay
 - **Email Utility**: Nodemailer
@@ -26,7 +25,6 @@ Developed a comprehensive e-commerce application using the MERN stack's backend 
 ![MongoDB](https://img.shields.io/badge/MongoDB-4.4-47A248) 
 ![Node.js](https://img.shields.io/badge/Node.js-14.x-339933)
 ![Express](https://img.shields.io/badge/Express-4.x-404D59)
-![React](https://img.shields.io/badge/React-17.x-61DAFB)
 ![CSS](https://img.shields.io/badge/CSS-3-1572B6)
 ![HTML](https://img.shields.io/badge/HTML-5-E34F26)
 ![Multer](https://img.shields.io/badge/Multer-1.4.2-FFCA28)
